@@ -34,7 +34,7 @@ export function Cover() {
 function CoverPage() {
   const feature = site.projects[0];
   return (
-    <div className="anim-cover mx-auto max-w-[31rem] [--tilt:0deg] lg:[--tilt:1.5deg]">
+    <div className="anim-cover mx-auto max-w-[31rem] [--tilt:0deg] lg:[--tilt:2.5deg]">
       <CoverTilt>
         <div className="cover-tilt group/cover @container relative bg-paper shadow-[0_2px_0_var(--color-ink),0_30px_60px_-30px_oklch(0.2_0.02_60/0.55)] ring-1 ring-ink">
           {/* Masthead */}
@@ -87,7 +87,7 @@ function CoverPage() {
               className="absolute bottom-[4cqw] left-[4cqw] max-w-[40cqw] bg-ink p-[2.5cqw] text-paper transition-transform duration-500 ease-easy hover:-translate-y-1"
             >
               <span className="block font-sans text-[3.1cqw] leading-snug font-bold uppercase tracking-wide">
-                Five jobs, abridged{" "}
+                Five jobs, in brief{" "}
                 <span className="tabular-nums">p.{contents.work.page}</span>
               </span>
             </a>
