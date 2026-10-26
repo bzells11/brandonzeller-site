@@ -218,7 +218,7 @@ function ContentsPage() {
         </ol>
       </nav>
 
-      <ul className="anim-rise mt-8 flex flex-wrap gap-x-6 gap-y-2 font-sans text-sm font-semibold [animation-delay:650ms] lg:mt-auto lg:pt-10">
+      <ul className="anim-rise mt-8 grid grid-cols-2 gap-2.5 font-sans text-sm font-semibold [animation-delay:650ms] sm:flex sm:flex-wrap sm:gap-x-6 sm:gap-y-2 lg:mt-auto lg:pt-10 [&_a]:flex [&_a]:h-12 [&_a]:items-center [&_a]:justify-center [&_a]:border [&_a]:border-ink sm:[&_a]:inline sm:[&_a]:h-auto sm:[&_a]:border-0">
         <li>
           <a href={`mailto:${site.email}`} className="marker">
             Email

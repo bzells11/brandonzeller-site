@@ -20,7 +20,7 @@ export function Intro() {
             </p>
           ))}
         </div>
-        <dl className="reveal self-start border-t-[3px] border-ink lg:col-span-4 lg:col-start-9" style={delay(280)}>
+        <dl className="reveal grid grid-cols-2 gap-x-5 self-start border-t-[3px] border-ink sm:grid-cols-4 lg:col-span-4 lg:col-start-9 lg:grid-cols-1" style={delay(280)}>
           {site.facts.map((f) => (
             <div key={f.label} className="border-b border-rule py-3">
               <dt className="font-sans text-kicker font-semibold tracking-[0.1em] uppercase text-muted">{f.label}</dt>
@@ -89,7 +89,7 @@ function FeatureStory({ project: p }: { project: Project }) {
           {p.tags.length > 0 && (
             <div>
               <Kicker className="border-b-[3px] border-ink pb-2">Built with</Kicker>
-              <ul className="font-sans text-sm">
+              <ul className="grid grid-cols-2 gap-x-5 font-sans text-sm lg:grid-cols-1">
                 {p.tags.map((t) => (
                   <li key={t} className="border-b border-rule py-2.5 font-medium">
                     {t}
@@ -114,7 +114,7 @@ export function Work() {
           <InView
             as="li"
             key={job.role + job.org}
-            className="reveal grid grid-cols-[2.5rem_1fr] gap-x-4 gap-y-2 border-b border-rule py-7 sm:grid-cols-[4rem_1fr] lg:grid-cols-[4rem_5fr_6fr_10rem] lg:gap-x-8"
+            className="reveal grid grid-cols-[2rem_1fr] gap-x-3.5 gap-y-2 border-b border-rule py-7 sm:grid-cols-[4rem_1fr] lg:grid-cols-[4rem_5fr_6fr_10rem] lg:gap-x-8"
           >
             <span className="row-span-3 font-display text-4xl leading-none font-bold tabular-nums sm:text-5xl lg:row-span-1">
               {i + 1}
@@ -260,8 +260,8 @@ export function BackCover() {
           })}
         </ul>
 
-        <div className="mt-16 flex border-t border-paper/30 pt-8 sm:justify-end">
-          <div className="flex items-end gap-5">
+        <div className="mt-16 border-t border-paper/30 pt-8">
+          <div className="flex items-end justify-between gap-5 sm:justify-end">
             <p className="font-sans text-xs opacity-70">{site.contact.copyright}</p>
             <div className="bg-paper px-3 pt-3 pb-1.5 text-ink">
               <Barcode value={site.url.replace("https://", "")} className="h-8 w-28" />
