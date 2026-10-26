@@ -13,10 +13,11 @@ export function IssuePopup({ project: p }: { project: Project }) {
       <button
         type="button"
         onClick={() => ref.current?.showModal()}
-        // Stretches over the whole cover, so clicking anywhere on it opens the popup.
-        className="marker inline-flex cursor-pointer items-center gap-0.5 uppercase after:absolute after:inset-0"
+        // Stretches over the whole cover, so clicking anywhere on it opens the popup. The highlighter
+        // sits on the inner span because "marker" is position: relative, which would pin this to the text.
+        className="cursor-pointer uppercase after:absolute after:inset-0"
       >
-        Learn more
+        <span className="marker">Learn more</span>
       </button>
       <dialog
         ref={ref}
