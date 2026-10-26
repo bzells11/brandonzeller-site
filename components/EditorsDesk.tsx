@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// The secret: ↑ ↑ ↓ ↓ ← → A B Enter opens the "Editor's desk",
+// The secret: ↑ ↑ ↓ ↓ ← → B A Enter opens the "Editor's desk",
 // which links to the site's private visitor analytics on Vercel (login required).
-const CODE = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "a", "b", "enter"];
+const CODE = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "b", "a", "enter"];
 const ANALYTICS_URL = "https://vercel.com/bzells11s-projects/brandonzeller-site/analytics";
 
 export function EditorsDesk() {
