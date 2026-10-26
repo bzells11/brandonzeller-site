@@ -276,15 +276,19 @@
   }
 }
 
+/* Ring that ripples out from the current build stage. It starts hidden behind the dot
+   and fades fully out before looping, so there's no visible restart. */
 @keyframes ping-slow {
   0% {
-    opacity: 0.9;
-    transform: scale(0.7);
+    opacity: 0;
+    transform: scale(1);
   }
-  80%,
+  20% {
+    opacity: 0.85;
+  }
   100% {
     opacity: 0;
-    transform: scale(1.5);
+    transform: scale(2.3);
   }
 }
 
@@ -347,7 +351,7 @@
     animation: scrap 2s cubic-bezier(0.3, 0.1, 0.6, 1) both;
   }
   .animate-ping-slow {
-    animation: ping-slow 2.2s var(--ease-easy) infinite;
+    animation: ping-slow 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   }
   .anim-spin {
     animation: spin 24s linear infinite;

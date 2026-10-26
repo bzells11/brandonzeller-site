@@ -251,7 +251,7 @@ function BuildTracker({ stages, current }: { stages: string[]; current: number }
                 i < current ? "border-ink bg-ink" : i === current ? "border-ink bg-marker" : "border-rule bg-paper"
               }`}
             >
-              {i === current && <span className="animate-ping-slow absolute -inset-1.5 rounded-full border-2 border-marker" />}
+              {i === current && <span className="animate-ping-slow absolute -inset-0.5 rounded-full border-2 border-marker will-change-transform" />}
             </span>
             <span className={`mt-2 leading-tight ${i > current ? "text-muted" : ""}`}>{s}</span>
           </li>
@@ -297,7 +297,7 @@ function BackIssues() {
               {iss.headline}
             </p>
             {/* Same portrait proportions as the big cover, so the photo isn't squashed. */}
-            <div className="relative my-2 aspect-[800/860] overflow-hidden rounded-[3px]">
+            <div className="relative my-2 aspect-[800/860] overflow-hidden rounded-[5px]">
               {iss.image && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
