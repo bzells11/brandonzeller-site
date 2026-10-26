@@ -296,16 +296,25 @@ function BackIssues() {
             <p className="mt-1 border-y border-current py-0.5 text-center font-sans text-[0.5625rem] font-semibold tracking-[0.2em] uppercase">
               {iss.headline}
             </p>
-            {/* The project's icon and wordmark on a white panel in the cover's photo frame. */}
+            {/* The project's icon and wordmark, printed like an old newspaper: warm newsprint,
+                faded ink, and a faint halftone dot screen over the top. */}
             <div
               className={`relative my-2 flex aspect-[800/860] flex-col items-center justify-center gap-[8%] overflow-hidden rounded-[5px] ${
-                iss.icon || iss.logo ? "bg-white ring-1 ring-rule" : ""
+                iss.icon || iss.logo ? "bg-[oklch(0.93_0.025_82)] ring-1 ring-rule" : ""
               }`}
             >
               {/* eslint-disable @next/next/no-img-element */}
-              {iss.icon && <img src={iss.icon} alt="" loading="lazy" className="w-[38%]" />}
-              {iss.logo && <img src={iss.logo} alt={`${iss.lead} logo`} loading="lazy" className="w-[74%]" />}
+              {iss.icon && <img src={iss.icon} alt="" loading="lazy" className="w-[38%] mix-blend-multiply contrast-[0.9] saturate-[0.3] sepia-[0.35]" />}
+              {iss.logo && (
+                <img src={iss.logo} alt={`${iss.lead} logo`} loading="lazy" className="w-[74%] mix-blend-multiply contrast-[0.9] saturate-[0.3] sepia-[0.35]" />
+              )}
               {/* eslint-enable @next/next/no-img-element */}
+              {(iss.icon || iss.logo) && (
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 opacity-60 mix-blend-multiply [background-image:radial-gradient(oklch(0.2_0.02_60/0.18)_0.7px,transparent_0.9px)] [background-size:3px_3px]"
+                />
+              )}
             </div>
             <p className="font-display text-xl leading-tight font-bold italic">{iss.lead}</p>
             <p className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">

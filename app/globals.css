@@ -111,6 +111,56 @@
 }
 
 
+/* ───────────────────────── Print edition (secret) ─────────────────────────
+   Unlocked with the Konami code (see EditorsDesk.tsx). The site becomes an aged,
+   black-and-white newspaper: yellowed paper, faded ink, halftone photos, crooked type. */
+:root[data-edition="print"] {
+  --color-paper: oklch(0.89 0.04 84);
+  --color-paper-2: oklch(0.86 0.045 82);
+  --color-ink: oklch(0.25 0.012 60);
+  --color-muted: oklch(0.42 0.018 65);
+  --color-rule: oklch(0.7 0.035 78);
+  --color-marker: oklch(0.8 0.05 86);
+  --color-cover: oklch(0.5 0.01 60);
+}
+
+:root[data-edition="print"] body {
+  transition: background-color 0.6s var(--ease-easy);
+}
+
+/* Photos and logos print in black and white with a little grit. */
+:root[data-edition="print"] img {
+  filter: grayscale(1) contrast(1.2) brightness(0.98) sepia(0.25);
+}
+
+/* Halftone dots and paper grain over the whole page. */
+:root[data-edition="print"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(oklch(0.3 0.02 60 / 0.16) 0.75px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0 0.18 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:
+    3px 3px,
+    160px 160px;
+}
+
+/* Type set slightly crooked, like it was pasted up by hand. */
+:root[data-edition="print"] main h3,
+:root[data-edition="print"] footer h2,
+:root[data-edition="print"] header h1 {
+  rotate: -0.6deg;
+}
+
+:root[data-edition="print"] main section:nth-of-type(even) h3 {
+  rotate: 0.5deg;
+}
+
 /* Highlighter swipe used on links and the contents list. Covers the whole word, left to right. */
 @utility marker {
   position: relative;
@@ -251,31 +301,6 @@
   }
 }
 
-@keyframes desk-in {
-  from {
-    opacity: 0;
-    transform: translateY(18px) rotate(-2deg) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes scrap {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) rotate(0deg);
-  }
-  8% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    transform: translate(var(--drift), 112vh) rotate(var(--spin));
-  }
-}
-
 /* Ring that ripples out from the current build stage. It starts hidden behind the dot
    and fades fully out before looping, so there's no visible restart. */
 @keyframes ping-slow {
@@ -289,6 +314,18 @@
   100% {
     opacity: 0;
     transform: scale(2.3);
+  }
+}
+
+/* Toast for the print edition: dropped onto the page like a stamped notice. */
+@keyframes stamp-in {
+  from {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -344,14 +381,11 @@
   .anim-slap {
     animation: slap 0.7s var(--ease-easy) 1s both;
   }
-  .anim-desk {
-    animation: desk-in 0.5s var(--ease-easy) both;
-  }
-  .anim-scrap {
-    animation: scrap 2s cubic-bezier(0.3, 0.1, 0.6, 1) both;
-  }
   .animate-ping-slow {
     animation: ping-slow 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  .anim-stamp-in {
+    animation: stamp-in 0.45s var(--ease-easy) both;
   }
   .anim-spin {
     animation: spin 24s linear infinite;
