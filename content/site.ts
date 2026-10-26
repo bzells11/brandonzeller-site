@@ -88,7 +88,7 @@ export const site = {
       status: "Launching Soon",
       size: "feature",
       // Update "current" as WaitLess moves along (0 = Idea … 4 = App Store).
-      progress: { stages: ["Idea", "Design", "Build", "Beta", "App Store"], current: 2 },
+      progress: { stages: ["Idea", "Design", "Build", "Beta", "App Store"], current: 3 },
       story: [
         "Urgent care wait times are scattered across clinic websites, if they're even posted at all. WaitLess pulls them into one list and sorts the clinics near you by how long you'd actually wait.",
         "It's an iOS app built with React Native and Expo, with a Node.js and Supabase backend and the Google Places API for finding clinics nearby.",

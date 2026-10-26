@@ -283,7 +283,7 @@ function BackIssues() {
         {site.issues.map((iss, i) => (
           <li
             key={iss.number}
-            className={`reveal flex aspect-[3/4] flex-col p-3 sm:w-44 ${
+            className={`reveal flex flex-col p-3 sm:w-44 ${
               iss.current ? "border border-ink bg-paper-2 shadow-[0_14px_30px_-18px_oklch(0.2_0.02_60/0.6)]" : "border border-dashed border-muted text-muted"
             }`}
             style={delay(i * 120)}
@@ -296,10 +296,18 @@ function BackIssues() {
             <p className="mt-1 border-y border-current py-0.5 text-center font-sans text-[0.5625rem] font-semibold tracking-[0.2em] uppercase">
               {iss.headline}
             </p>
-            <div className="relative my-2 flex-1 overflow-hidden">
+            {/* Same portrait proportions as the big cover, so the photo isn't squashed. */}
+            <div className="relative my-2 aspect-[800/860] overflow-hidden">
               {iss.image && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={iss.image} alt="" loading="lazy" className="absolute inset-0 size-full object-cover object-[50%_20%]" />
+                <img
+                  src={iss.image}
+                  srcSet="/headshot-480.webp 480w, /headshot-640.webp 640w"
+                  sizes="(min-width: 640px) 160px, 45vw"
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0 size-full object-cover object-[50%_20%]"
+                />
               )}
             </div>
             <p className="font-display text-xl leading-tight font-bold italic">{iss.lead}</p>
