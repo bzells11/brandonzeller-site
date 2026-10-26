@@ -12,7 +12,7 @@
   --color-muted: oklch(0.4 0.014 60);
   --color-rule: oklch(0.83 0.016 80);
   --color-marker: oklch(0.91 0.18 103);
-  /* Text that sits on the yellow highlighter. Stays dark in both editions. */
+  /* Text that sits on the yellow highlighter. */
   --color-on-marker: oklch(0.2 0.012 60);
   --color-cover: oklch(0.52 0.12 245);
 
@@ -97,7 +97,7 @@
     color: var(--color-on-marker);
   }
 
-  /* Text on the yellow highlighter stays dark, even in the night edition. */
+  /* Text on the yellow highlighter stays dark. */
   .bg-marker,
   .active\:bg-marker:active {
     color: var(--color-on-marker);
@@ -110,22 +110,6 @@
   }
 }
 
-/* ───────────────────────── Night edition ─────────────────────────
-   Same magazine, printed on black. Toggled from the nav; remembered per visitor. */
-:root[data-theme="night"] {
-  color-scheme: dark;
-  --color-paper: oklch(0.17 0.008 60);
-  --color-paper-2: oklch(0.205 0.01 60);
-  --color-ink: oklch(0.94 0.012 85);
-  --color-muted: oklch(0.73 0.014 75);
-  --color-rule: oklch(0.34 0.012 60);
-}
-
-@layer base {
-  html {
-    transition: background-color 0.5s var(--ease-easy);
-  }
-}
 
 /* Highlighter swipe used on links and the contents list. Covers the whole word, left to right. */
 @utility marker {

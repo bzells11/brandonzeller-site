@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { site } from "@/content/site";
 import { contents } from "./contents";
-import { EditionToggle } from "./EditionToggle";
 import { MobileMenu } from "./MobileMenu";
 import { Container } from "./ui";
 
@@ -24,9 +23,6 @@ export function Nav() {
                 </a>
               </li>
             ))}
-            <li>
-              <EditionToggle />
-            </li>
             <li>
               <Link href="/resume" className="rounded-md border border-ink px-3 py-1.5 transition-colors duration-500 ease-easy hover:bg-marker">
                 Resume

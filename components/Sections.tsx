@@ -306,7 +306,8 @@ function BackIssues() {
                   sizes="(min-width: 640px) 160px, 45vw"
                   alt=""
                   loading="lazy"
-                  className="absolute inset-0 size-full object-cover object-[50%_20%]"
+                  // Muted, slightly warm print tone, like an older issue on the shelf.
+                  className="absolute inset-0 size-full object-cover object-[50%_20%] contrast-[0.95] saturate-[0.35] sepia-[0.18]"
                 />
               )}
             </div>
