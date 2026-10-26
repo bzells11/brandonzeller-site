@@ -14,7 +14,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const STRIPS = 16;
 // Total curl across the sheet at the middle of a turn, spread evenly over the strips.
-const CURL = 75;
+const CURL = 90;
 
 type Label = { page: string; title: string };
 type Hinge = "left" | "right";
@@ -45,7 +45,9 @@ export function PageTurn() {
           const p = Math.min(1, (now - start) / duration);
           // Slow lift, quick sweep through the middle, soft landing.
           const e = p < 0.5 ? 4 * p ** 3 : 1 - (-2 * p + 2) ** 3 / 2;
-          const swell = Math.sin(Math.PI * p);
+          // sin² rather than sin: the curl eases out to zero speed as the page lands, so it settles
+          // flat with the hinge instead of snapping flat in the last frame.
+          const swell = Math.sin(Math.PI * p) ** 2;
           sheet.style.setProperty("--a", `${from + (to - from) * e}deg`);
           sheet.style.setProperty("--b", `${(dir * CURL * swell) / STRIPS}deg`);
           sheet.style.setProperty("--s", `${0.45 * swell}`);
