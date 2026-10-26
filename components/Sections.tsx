@@ -69,9 +69,14 @@ function FromTheArchive({ projects }: { projects: Project[] }) {
             className="reveal grid gap-6 border-b border-rule py-8 sm:grid-cols-[11rem_1fr] sm:gap-8 lg:grid-cols-[13rem_1fr_auto] lg:items-center lg:gap-12"
           >
             {p.logo && (
-              <div className="flex aspect-[16/10] w-full max-w-[13rem] items-center justify-center rounded-[5px] bg-white p-5 ring-1 ring-rule">
+              <div className="flex aspect-[16/10] w-full max-w-[13rem] items-center justify-center rounded-[5px] bg-[oklch(0.93_0.025_82)] p-5 ring-1 ring-rule">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={p.logo} alt={`${p.name} logo`} loading="lazy" className="max-h-full w-full object-contain" />
+                <img
+                  src={p.logo}
+                  alt={`${p.name} logo`}
+                  loading="lazy"
+                  className="max-h-full w-full object-contain mix-blend-multiply contrast-[0.9] saturate-[0.45] sepia-[0.3]"
+                />
               </div>
             )}
             <div>

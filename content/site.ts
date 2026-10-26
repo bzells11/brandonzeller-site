@@ -5,7 +5,7 @@
 // Your main app's name. Change it here and it updates everywhere it appears.
 export const MAIN_PROJECT_NAME = "WaitLess";
 
-export type ProjectStatus = "Launching Soon" | "Prototype" | "In Development" | "Live";
+export type ProjectStatus = "Launching Soon" | "Prototype" | "Failed prototype" | "In Development" | "Live";
 
 export type Project = {
   id: string;
@@ -104,9 +104,9 @@ export const site = {
       id: "rew-ai",
       name: "REW AI",
       description:
-        "AI acquisitions agent for real estate wholesalers: texts motivated sellers, qualifies leads through AI conversation, and flags hot deals on a dashboard.",
+        "AI acquisitions agent for real estate wholesalers: texts motivated sellers, qualifies leads through AI conversation, and flags hot deals on a dashboard. It never made it past the prototype. I got on a call with a real wholesaling business and found out they didn't need it, so I stopped building. The lesson stuck: talk to the customer before you write the code.",
       tags: ["Claude API", "Twilio", "Railway"],
-      status: "Prototype",
+      status: "Failed prototype",
       note: "No. 00 · The pilot issue · Built as an MVP in spring 2026",
       href: "https://rewai-demo.vercel.app",
       logo: "/issues/rewai.webp",
