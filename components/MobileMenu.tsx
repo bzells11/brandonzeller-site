@@ -72,14 +72,14 @@ export function MobileMenu() {
           ))}
         </ol>
         <div className="mt-8 grid grid-cols-2 gap-3 font-sans text-sm font-semibold">
-          <a href={`mailto:${site.email}`} className="flex h-12 items-center justify-center border border-ink active:bg-marker">
+          <a href={`mailto:${site.email}`} className="flex h-12 items-center justify-center rounded-md border border-ink active:bg-marker">
             Email
           </a>
           <a
             href={site.links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-12 items-center justify-center border border-ink active:bg-marker"
+            className="flex h-12 items-center justify-center rounded-md border border-ink active:bg-marker"
           >
             LinkedIn
           </a>

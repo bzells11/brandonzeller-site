@@ -19,7 +19,7 @@ export default function ResumePage() {
       <header className="sticky top-0 z-50 border-b border-ink bg-paper print:hidden">
         <Container className="flex h-14 items-center justify-between gap-4">
           <Link href="/" className="group inline-flex items-center gap-2 font-sans text-sm font-semibold">
-            <ArrowRight className="size-4 rotate-180 transition-transform group-hover:-translate-x-0.5" />
+            <ArrowRight className="size-4 rotate-180 transition-transform duration-500 ease-easy group-hover:-translate-x-0.5" />
             <span className="marker">
               Back<span className="hidden sm:inline">&nbsp;to the issue</span>
             </span>
@@ -111,7 +111,7 @@ export default function ResumePage() {
             <div className="flex items-center gap-6">
               <a
                 {...download}
-                className="inline-flex h-14 items-center gap-2 bg-marker px-6 font-sans text-base font-semibold text-ink transition-transform duration-300 ease-out-expo hover:-translate-y-0.5"
+                className="inline-flex h-14 items-center gap-2 rounded-md bg-marker px-6 font-sans text-base font-semibold text-ink transition-transform duration-500 ease-easy hover:-translate-y-0.5"
               >
                 <DownloadIcon />
                 Download PDF

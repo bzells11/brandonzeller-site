@@ -18,13 +18,13 @@ export function Nav() {
           <ul className="flex items-center gap-4 md:gap-5">
             {links.map((l) => (
               <li key={l.id} className="hidden md:block">
-                <a href={`#${l.id}`} className="marker inline-block">
+                <a href={`#${l.id}`} className="underline-swipe inline-block">
                   {l.label}
                 </a>
               </li>
             ))}
             <li>
-              <Link href="/resume" className="border border-ink px-3 py-1.5 transition-colors hover:bg-marker">
+              <Link href="/resume" className="rounded-md border border-ink px-3 py-1.5 transition-colors duration-500 ease-easy hover:bg-marker">
                 Resume
               </Link>
             </li>

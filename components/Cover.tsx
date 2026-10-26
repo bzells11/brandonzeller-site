@@ -71,7 +71,7 @@ function CoverPage() {
 
             <a
               href={`#${contents.feature.id}`}
-              className="absolute bottom-[25cqw] left-[4cqw] max-w-[44cqw] bg-paper p-[2.5cqw] transition-transform duration-300 ease-out-expo hover:-translate-y-1"
+              className="absolute bottom-[21cqw] left-[4cqw] max-w-[44cqw] bg-paper p-[2.5cqw] transition-transform duration-500 ease-easy hover:-translate-y-1"
             >
               <span className="block font-display text-[6.5cqw] leading-none font-bold italic">
                 {feature.name}
@@ -84,7 +84,7 @@ function CoverPage() {
 
             <a
               href={`#${contents.work.id}`}
-              className="absolute bottom-[4cqw] left-[4cqw] max-w-[40cqw] bg-ink p-[2.5cqw] text-paper transition-transform duration-300 ease-out-expo hover:-translate-y-1"
+              className="absolute bottom-[4cqw] left-[4cqw] max-w-[40cqw] bg-ink p-[2.5cqw] text-paper transition-transform duration-500 ease-easy hover:-translate-y-1"
             >
               <span className="block font-sans text-[3.1cqw] leading-snug font-bold uppercase tracking-wide">
                 Five jobs, abridged{" "}
@@ -116,7 +116,7 @@ function Sticker({ label }: { label: string }) {
   return (
     <div
       aria-hidden="true"
-      className="absolute top-[4cqw] right-[4cqw] size-[27cqw] rotate-12 transition-[scale,rotate] duration-500 ease-out-expo group-hover/cover:scale-110 group-hover/cover:rotate-[20deg]"
+      className="absolute top-[4cqw] right-[4cqw] size-[27cqw] rotate-12 transition-[scale,rotate] duration-700 ease-easy group-hover/cover:scale-110 group-hover/cover:rotate-[20deg]"
     >
       <svg viewBox="0 0 100 100" className="size-full">
         <circle cx="50" cy="50" r="49" fill="var(--color-marker)" />
@@ -211,14 +211,14 @@ function ContentsPage() {
                 <span className="marker justify-self-start font-serif text-xl font-medium italic">
                   {e.title}
                 </span>
-                <ArrowUpRight className="size-4 rotate-90 text-muted transition-transform group-hover:translate-y-0.5" />
+                <ArrowUpRight className="size-4 rotate-90 text-muted transition-transform duration-500 ease-easy group-hover:translate-y-0.5" />
               </a>
             </li>
           ))}
         </ol>
       </nav>
 
-      <ul className="anim-rise mt-8 grid grid-cols-2 gap-2.5 font-sans text-sm font-semibold [animation-delay:650ms] sm:flex sm:flex-wrap sm:gap-x-6 sm:gap-y-2 lg:mt-auto lg:pt-10 [&_a]:flex [&_a]:h-12 [&_a]:items-center [&_a]:justify-center [&_a]:border [&_a]:border-ink sm:[&_a]:inline sm:[&_a]:h-auto sm:[&_a]:border-0">
+      <ul className="anim-rise mt-8 grid grid-cols-2 gap-2.5 font-sans text-sm font-semibold [animation-delay:650ms] sm:flex sm:flex-wrap sm:gap-x-6 sm:gap-y-2 lg:mt-auto lg:pt-10 [&_a]:flex [&_a]:h-12 [&_a]:items-center [&_a]:justify-center [&_a]:rounded-md [&_a]:border [&_a]:border-ink sm:[&_a]:inline sm:[&_a]:h-auto sm:[&_a]:border-0">
         <li>
           <a href={`mailto:${site.email}`} className="marker">
             Email

@@ -49,7 +49,7 @@ function FeatureStory({ project: p }: { project: Project }) {
     <article>
       <Kicker className="reveal">
         Cover story <span className="mx-2 text-muted">/</span>
-        <span className="bg-marker px-1.5 py-0.5">{p.status}</span>
+        <span className="rounded-[4px] bg-marker px-1.5 py-0.5">{p.status}</span>
       </Kicker>
       <MaskTitle className="mt-5 text-mega font-bold" delay={80}>{p.name}</MaskTitle>
       <p className="reveal mt-6 max-w-3xl font-serif text-deck italic" style={delay(220)}>{p.description}</p>
@@ -222,7 +222,7 @@ export function BackCover() {
 
         <a
           href={`mailto:${site.email}`}
-          className="mt-10 inline-block font-serif text-deck break-all italic underline decoration-1 underline-offset-[0.2em] transition-colors duration-300 hover:text-marker"
+          className="mt-10 inline-block font-serif text-deck break-all italic underline decoration-1 underline-offset-[0.2em] transition-colors duration-500 ease-easy hover:text-marker"
         >
           {site.email}
         </a>
@@ -234,14 +234,14 @@ export function BackCover() {
             { label: "Resume", note: "View or download", href: "/resume", external: false },
           ].map((l, i) => {
             const cls =
-              "group flex items-center justify-between gap-4 border border-paper/40 p-5 transition duration-300 ease-out-expo hover:-translate-y-1 hover:border-marker hover:bg-marker hover:text-ink sm:p-6";
+              "group flex items-center justify-between gap-4 rounded-lg border border-paper/40 p-5 transition duration-500 ease-easy hover:-translate-y-1 hover:border-marker hover:bg-marker hover:text-ink sm:p-6";
             const inner = (
               <>
                 <span>
                   <span className="block font-display text-3xl font-bold sm:text-4xl">{l.label}</span>
                   <span className="mt-1 block font-sans text-sm font-medium opacity-80">{l.note}</span>
                 </span>
-                <ArrowUpRight className="size-7 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <ArrowUpRight className="size-7 shrink-0 transition-transform duration-500 ease-easy group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </>
             );
             return (

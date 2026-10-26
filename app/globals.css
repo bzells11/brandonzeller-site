@@ -39,6 +39,8 @@
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  /* "Easy ease" for hovers: starts slow, speeds through the middle, settles softly. */
+  --ease-easy: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* ───────────────────────── Base ───────────────────────── */
@@ -104,14 +106,39 @@
     position: absolute;
     inset: -0.1em -0.3em;
     z-index: -1;
+    border-radius: 6px;
     background: var(--color-marker);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.35s var(--ease-out-expo);
+    transition: transform 0.5s var(--ease-easy);
   }
 
   &:hover::before,
   &:focus-visible::before {
+    transform: scaleX(1);
+  }
+}
+
+/* Underline that draws in from the left. Used on the top menu links. */
+@utility underline-swipe {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.3em;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-easy);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
     transform: scaleX(1);
   }
 }

@@ -112,7 +112,7 @@ export function ArrowRight({ className = "size-4" }: { className?: string }) {
 }
 
 const buttonBase =
-  "inline-flex h-11 items-center justify-center gap-2 px-5 font-sans text-sm font-semibold transition duration-200 ease-out-expo";
+  "inline-flex h-11 items-center justify-center gap-2 rounded-md px-5 font-sans text-sm font-semibold transition duration-500 ease-easy";
 
 export const buttonStyles = {
   primary: `${buttonBase} border border-ink bg-ink text-paper hover:bg-marker hover:text-ink`,
