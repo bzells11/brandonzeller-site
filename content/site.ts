@@ -18,6 +18,10 @@ export type Project = {
   // Optional screenshot in /public/projects (e.g. "/projects/waitless.png").
   // Until you add one, a clean placeholder frame is shown.
   image?: string;
+  // Optional logo in /public/issues, shown on smaller project cards.
+  logo?: string;
+  // Optional one-line timeline note, e.g. "Built as an MVP in spring 2026".
+  note?: string;
   // "feature" = the cover story. Use it for one project only.
   size: "feature" | "standard";
   // Paragraphs for the feature story. Optional.
@@ -61,8 +65,9 @@ export const site = {
   // project's icon and wordmark (put the files in /public/issues; either one is optional). When you ship your next big project,
   // add it here as a new issue (and move "current" to it).
   issues: [
-    { number: "01", season: "Fall 2026", headline: "The founder issue", lead: "WaitLess", current: true, icon: "/issues/waitless-icon.webp", logo: "/issues/waitless-wordmark.webp" },
-    { number: "02", season: "Coming soon", headline: "The next issue", lead: "Next project", current: false, icon: "", logo: "" },
+    { number: "00", season: "Spring 2026", headline: "The pilot issue", lead: "REW AI", current: false, icon: "", logo: "/issues/rewai.webp", href: "https://rewai-demo.vercel.app" },
+    { number: "01", season: "Fall 2026", headline: "The founder issue", lead: "WaitLess", current: true, icon: "/issues/waitless-icon.webp", logo: "/issues/waitless-wordmark.webp", href: "" },
+    { number: "02", season: "Coming soon", headline: "The next issue", lead: "Next project", current: false, icon: "", logo: "", href: "" },
   ],
 
   about: [
@@ -95,7 +100,19 @@ export const site = {
         "It's an iOS app built with React Native and Expo, with a Node.js and Supabase backend and the Google Places API for finding clinics nearby.",
       ],
     },
-  ] satisfies Project[],
+    {
+      id: "rew-ai",
+      name: "REW AI",
+      description:
+        "AI acquisitions agent for real estate wholesalers: texts motivated sellers, qualifies leads through AI conversation, and flags hot deals on a dashboard.",
+      tags: ["Claude API", "Twilio", "Railway"],
+      status: "Prototype",
+      note: "Built as an MVP in spring 2026",
+      href: "https://rewai-demo.vercel.app",
+      logo: "/issues/rewai.webp",
+      size: "standard",
+    },
+  ] as Project[],
 
   experience: [
     {

@@ -43,10 +43,62 @@ export function Feature() {
       read={readTime(...site.projects.flatMap((p) => [p.description, ...(p.story ?? [])]))}
       className="bg-paper-2"
     >
-      {site.projects.map((p) => (
-        <FeatureStory key={p.id} project={p} />
-      ))}
+      {site.projects
+        .filter((p) => p.size === "feature")
+        .map((p) => (
+          <FeatureStory key={p.id} project={p} />
+        ))}
+      <AlsoInThisIssue projects={site.projects.filter((p) => p.size !== "feature")} />
     </Section>
+  );
+}
+
+// Smaller projects, run after the cover story like a magazine's "also in this issue" column.
+function AlsoInThisIssue({ projects }: { projects: Project[] }) {
+  if (projects.length === 0) return null;
+  return (
+    <div className="mt-20 sm:mt-24">
+      <Kicker className="border-b-[3px] border-ink pb-2">Also in this issue</Kicker>
+      <ul>
+        {projects.map((p) => (
+          <InView
+            as="li"
+            key={p.id}
+            className="reveal grid gap-6 border-b border-rule py-8 sm:grid-cols-[11rem_1fr] sm:gap-8 lg:grid-cols-[13rem_1fr_auto] lg:items-center lg:gap-12"
+          >
+            {p.logo && (
+              <div className="flex aspect-[16/10] w-full max-w-[13rem] items-center justify-center rounded-[5px] bg-white p-5 ring-1 ring-rule">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.logo} alt={`${p.name} logo`} loading="lazy" className="max-h-full w-full object-contain" />
+              </div>
+            )}
+            <div>
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <h4 className="font-display text-4xl leading-none font-bold">{p.name}</h4>
+                <Kicker>
+                  <span className="rounded-[4px] border border-ink px-1.5 py-0.5">{p.status}</span>
+                </Kicker>
+              </div>
+              {p.note && <p className="mt-2 font-sans text-sm font-medium text-muted">{p.note}</p>}
+              <p className="mt-3 max-w-2xl text-body">{p.description}</p>
+              {p.tags.length > 0 && (
+                <p className="mt-3 font-sans text-sm font-medium text-muted">Built with {p.tags.join(" · ")}</p>
+              )}
+            </div>
+            {p.href && (
+              <a
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${buttonStyles.primary} justify-self-start sm:col-start-2 lg:col-start-auto lg:justify-self-end`}
+              >
+                Try the demo <ArrowUpRight />
+              </a>
+            )}
+          </InView>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -284,7 +336,9 @@ function BackIssues() {
           <li
             key={iss.number}
             className={`reveal flex flex-col p-3 sm:w-44 ${
-              iss.current ? "border border-ink bg-paper-2 shadow-[0_14px_30px_-18px_oklch(0.2_0.02_60/0.6)]" : "border border-dashed border-muted text-muted"
+              iss.icon || iss.logo
+                ? "border border-ink bg-paper-2 shadow-[0_14px_30px_-18px_oklch(0.2_0.02_60/0.6)]"
+                : "border border-dashed border-muted text-muted"
             }`}
             style={delay(i * 120)}
           >
@@ -320,6 +374,10 @@ function BackIssues() {
             <p className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
               {iss.current ? (
                 <span className="rounded-[3px] bg-marker px-1 text-on-marker">You&rsquo;re reading it</span>
+              ) : iss.href ? (
+                <a href={iss.href} target="_blank" rel="noopener noreferrer" className="marker inline-flex items-center gap-0.5">
+                  Try the demo <ArrowUpRight className="size-3" />
+                </a>
               ) : (
                 "In production"
               )}
@@ -329,11 +387,11 @@ function BackIssues() {
         <li className="reveal col-span-2 flex flex-col justify-between rounded-lg border border-ink p-5 sm:ml-auto sm:max-w-xs" style={delay(240)}>
           <div>
             <p className="font-sans text-kicker font-semibold uppercase text-muted">Subscribe</p>
-            <p className="mt-2 font-display text-2xl leading-tight font-bold">Get Issue No. 02 when it drops.</p>
+            <p className="mt-2 font-display text-2xl leading-tight font-bold">Get the next issue when it drops.</p>
             <p className="mt-2 text-base text-muted">Send me a quick email and I&rsquo;ll let you know when my next project launches.</p>
           </div>
           <a
-            href={`mailto:${site.email}?subject=${encodeURIComponent("Subscribe me to Issue No. 02")}&body=${encodeURIComponent("Let me know when your next project launches.")}`}
+            href={`mailto:${site.email}?subject=${encodeURIComponent("Subscribe me to the next issue")}&body=${encodeURIComponent("Let me know when your next project launches.")}`}
             className={`${buttonStyles.primary} mt-5 w-full`}
           >
             Subscribe by email <ArrowUpRight />
