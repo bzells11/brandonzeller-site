@@ -26,16 +26,19 @@ export function PageTurn() {
       busy = true;
       setLabel({ page: link.dataset.page ?? "", title: link.dataset.title ?? "" });
 
-      // Gentle sine in-out: no snap at either end. Slightly slower so the turn reads like real paper.
-      const ease = "cubic-bezier(0.37, 0, 0.63, 1)";
+      // Easy ease (slow start, quick middle, soft landing), matching the site's hover timing.
+      // The page sweeps in from the right with a slight 3D lean, then lifts and slides fully off the left edge.
+      const ease = "cubic-bezier(0.65, 0, 0.35, 1)";
       const shade = el.querySelector<HTMLElement>("[data-shade]");
       el.hidden = false;
-      shade?.animate([{ opacity: 0.45 }, { opacity: 0 }], { duration: 700, easing: ease, fill: "forwards" });
-      el.animate([{ transform: "rotateY(-95deg)" }, { transform: "rotateY(0deg)" }], {
-        duration: 700,
-        easing: ease,
-        fill: "forwards",
-      }).finished.then(() => {
+      shade?.animate([{ opacity: 0.4 }, { opacity: 0 }], { duration: 800, easing: ease, fill: "forwards" });
+      el.animate(
+        [
+          { transform: "translateX(115%) rotateY(-38deg)" },
+          { transform: "translateX(0) rotateY(0deg)" },
+        ],
+        { duration: 800, easing: ease, fill: "forwards" },
+      ).finished.then(() => {
         const root = document.documentElement;
         const prev = root.style.scrollBehavior;
         root.style.scrollBehavior = "auto";
@@ -43,13 +46,14 @@ export function PageTurn() {
         root.style.scrollBehavior = prev;
         history.pushState(null, "", `#${id}`);
 
-        shade?.animate([{ opacity: 0 }, { opacity: 0.45 }], { duration: 750, delay: 220, easing: ease, fill: "forwards" });
-        return el.animate([{ transform: "rotateY(0deg)" }, { transform: "rotateY(95deg)" }], {
-          duration: 750,
-          delay: 220,
-          easing: ease,
-          fill: "forwards",
-        }).finished;
+        shade?.animate([{ opacity: 0 }, { opacity: 0.4 }], { duration: 850, delay: 200, easing: ease, fill: "forwards" });
+        return el.animate(
+          [
+            { transform: "translateX(0) rotateY(0deg)" },
+            { transform: "translateX(-115%) rotateY(38deg)" },
+          ],
+          { duration: 850, delay: 200, easing: ease, fill: "forwards" },
+        ).finished;
       }).then(() => {
         el.hidden = true;
         el.getAnimations({ subtree: true }).forEach((a) => a.cancel());
@@ -68,7 +72,7 @@ export function PageTurn() {
       <div
         ref={sheet}
         hidden
-        className="absolute inset-0 flex origin-left flex-col items-center justify-center bg-paper shadow-[0_0_80px_oklch(0.2_0.02_60/0.35)] will-change-transform [backface-visibility:hidden]"
+        className="absolute inset-0 flex origin-center flex-col items-center justify-center bg-paper shadow-[0_0_80px_oklch(0.2_0.02_60/0.35)] will-change-transform [backface-visibility:hidden]"
       >
         {/* Soft shadow across the page as it bends, darkest near the spine. */}
         <span data-shade className="absolute inset-0 bg-gradient-to-r from-ink/60 via-ink/10 to-transparent opacity-0" />
