@@ -113,9 +113,15 @@
     transition: transform 0.5s var(--ease-easy);
   }
 
-  &:hover::before,
   &:focus-visible::before {
     transform: scaleX(1);
+  }
+
+  /* Mouse hover only, so a tap on a phone doesn't leave the highlight stuck on. */
+  @media (hover: hover) {
+    &:hover::before {
+      transform: scaleX(1);
+    }
   }
 }
 
@@ -137,9 +143,14 @@
     transition: transform 0.5s var(--ease-easy);
   }
 
-  &:hover::after,
   &:focus-visible::after {
     transform: scaleX(1);
+  }
+
+  @media (hover: hover) {
+    &:hover::after {
+      transform: scaleX(1);
+    }
   }
 }
 
@@ -175,6 +186,41 @@
     transform: translateY(16px);
   }
   to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Masthead letters: drop onto the page and settle, like a printing press. */
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    transform: translateY(-0.12em) scale(1.35);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Sticker: slapped onto the cover with a small bounce. */
+@keyframes slap {
+  0% {
+    opacity: 0;
+    transform: scale(2.1) rotate(-28deg);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(0.9) rotate(4deg);
+  }
+  78% {
+    transform: scale(1.05) rotate(-1deg);
+  }
+  100% {
     opacity: 1;
     transform: none;
   }
@@ -225,6 +271,12 @@
   }
   .anim-rise {
     animation: rise 0.8s var(--ease-out-expo) both;
+  }
+  .anim-stamp {
+    animation: stamp 0.55s var(--ease-out-expo) both;
+  }
+  .anim-slap {
+    animation: slap 0.7s var(--ease-easy) 1s both;
   }
   .anim-spin {
     animation: spin 24s linear infinite;

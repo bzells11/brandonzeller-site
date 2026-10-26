@@ -46,7 +46,14 @@ function CoverPage() {
             </div>
             <h1 className="mt-[1cqw] text-center font-display text-[24cqw] leading-[0.82] font-bold tracking-[-0.04em]">
               <span className="sr-only">{site.name}</span>
-              <span aria-hidden="true">ZELLER</span>
+              <span aria-hidden="true">
+                {/* Each letter stamps down in turn, like type hitting the page. */}
+                {"ZELLER".split("").map((ch, i) => (
+                  <span key={i} className="anim-stamp inline-block" style={{ animationDelay: `${300 + i * 70}ms` }}>
+                    {ch}
+                  </span>
+                ))}
+              </span>
             </h1>
             <p className="mt-[1.5cqw] border-y border-ink py-[1cqw] text-center font-sans text-[2.9cqw] font-semibold uppercase tracking-[0.25em]">
               The founder issue
@@ -116,7 +123,7 @@ function Sticker({ label }: { label: string }) {
   return (
     <div
       aria-hidden="true"
-      className="absolute top-[4cqw] right-[4cqw] size-[27cqw] rotate-12 transition-[scale,rotate] duration-700 ease-easy group-hover/cover:scale-110 group-hover/cover:rotate-[20deg]"
+      className="anim-slap absolute top-[4cqw] right-[4cqw] size-[27cqw] rotate-12 transition-[scale,rotate] duration-700 ease-easy group-hover/cover:scale-110 group-hover/cover:rotate-[20deg]"
     >
       <svg viewBox="0 0 100 100" className="size-full">
         <circle cx="50" cy="50" r="49" fill="var(--color-marker)" />
