@@ -4,6 +4,7 @@ import { contents } from "./contents";
 import { WaitChart } from "./WaitChart";
 import { InView } from "./InView";
 import { IssuePopup } from "./IssuePopup";
+import { CoverTilt } from "./CoverTilt";
 import { ArrowUpRight, Barcode, Container, Kicker, MaskTitle, Section, buttonStyles, delay, readTime } from "./ui";
 
 export function Intro() {
@@ -280,6 +281,13 @@ function Vinyl() {
 // The write-up behind a back-issue cover's "Learn more" popup.
 const archived = (id: string) => site.projects.find((p) => p.id === id);
 
+// Covers you can click (a popup, or the current issue's story up top) tilt toward the cursor like the big cover.
+const clickable = (iss: (typeof site.issues)[number]) => iss.current || !!archived(iss.archive);
+
+function CoverFrame({ clickable, children }: { clickable: boolean; children: React.ReactNode }) {
+  return clickable ? <CoverTilt className="flex w-full">{children}</CoverTilt> : children;
+}
+
 // Mini covers for every issue. The current one is this site; future ones are placeholders.
 function BackIssues() {
   return (
@@ -287,57 +295,61 @@ function BackIssues() {
       <p className="border-b-[3px] border-ink pb-2 font-sans text-kicker font-semibold uppercase">Every issue</p>
       <ul className="mt-6 grid grid-cols-2 gap-4 sm:flex sm:items-stretch sm:gap-6">
         {site.issues.map((iss, i) => (
-          <li
-            key={iss.number}
-            className={`reveal relative flex flex-col p-3 sm:w-44 ${
-              iss.icon || iss.logo
-                ? "border border-ink bg-paper-2 shadow-[0_14px_30px_-18px_oklch(0.2_0.02_60/0.6)]"
-                : "border border-dashed border-muted text-muted"
-            }`}
-            style={delay(i * 120)}
-          >
-            <div className="flex justify-between font-sans text-[0.625rem] font-semibold uppercase">
-              <span>No. {iss.number}</span>
-              <span>{iss.season}</span>
-            </div>
-            <p className="mt-1 text-center font-display text-[2.1rem] leading-none font-bold tracking-tight">ZELLER</p>
-            <p className="mt-1 border-y border-current py-0.5 text-center font-sans text-[0.5625rem] font-semibold tracking-[0.2em] uppercase">
-              {iss.headline}
-            </p>
-            {/* The project's icon and wordmark, printed like an old newspaper: warm newsprint,
-                faded ink, and a faint halftone dot screen over the top. */}
-            <div
-              className={`relative my-2 flex aspect-[800/860] flex-col items-center justify-center gap-[8%] overflow-hidden rounded-[5px] ${
-                iss.icon || iss.logo ? "bg-[oklch(0.93_0.025_82)] ring-1 ring-rule" : ""
-              }`}
-            >
-              {/* eslint-disable @next/next/no-img-element */}
-              {iss.icon && <img src={iss.icon} alt="" loading="lazy" className="w-[38%] mix-blend-multiply contrast-[0.9] saturate-[0.3] sepia-[0.35]" />}
-              {iss.logo && (
-                <img src={iss.logo} alt={`${iss.lead} logo`} loading="lazy" className="w-[74%] mix-blend-multiply contrast-[0.9] saturate-[0.3] sepia-[0.35]" />
-              )}
-              {/* eslint-enable @next/next/no-img-element */}
-              {(iss.icon || iss.logo) && (
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 opacity-60 mix-blend-multiply [background-image:radial-gradient(oklch(0.2_0.02_60/0.18)_0.7px,transparent_0.9px)] [background-size:3px_3px]"
-                />
-              )}
-            </div>
-            <p className="font-display text-xl leading-tight font-bold italic">{iss.lead}</p>
-            <div className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
-              {iss.current ? (
-                <span className="rounded-[3px] bg-marker px-1 text-on-marker">You&rsquo;re reading it</span>
-              ) : archived(iss.archive) ? (
-                <IssuePopup project={archived(iss.archive)!} />
-              ) : iss.href ? (
-                <a href={iss.href} target="_blank" rel="noopener noreferrer" className="marker inline-flex items-center gap-0.5">
-                  Try the demo <ArrowUpRight className="size-3" />
-                </a>
-              ) : (
-                "In production"
-              )}
-            </div>
+          <li key={iss.number} className="reveal flex sm:w-44" style={delay(i * 120)}>
+            <CoverFrame clickable={clickable(iss)}>
+              <div
+                className={`relative flex w-full flex-col p-3 ${clickable(iss) ? "cover-tilt" : ""} ${
+                  iss.icon || iss.logo
+                    ? "border border-ink bg-paper-2 shadow-[0_14px_30px_-18px_oklch(0.2_0.02_60/0.6)]"
+                    : "border border-dashed border-muted text-muted"
+                }`}
+              >
+              <div className="flex justify-between font-sans text-[0.625rem] font-semibold uppercase">
+                <span>No. {iss.number}</span>
+                <span>{iss.season}</span>
+              </div>
+              <p className="mt-1 text-center font-display text-[2.1rem] leading-none font-bold tracking-tight">ZELLER</p>
+              <p className="mt-1 border-y border-current py-0.5 text-center font-sans text-[0.5625rem] font-semibold tracking-[0.2em] uppercase">
+                {iss.headline}
+              </p>
+              {/* The project's icon and wordmark, printed like an old newspaper: warm newsprint,
+                  faded ink, and a faint halftone dot screen over the top. */}
+              <div
+                className={`relative my-2 flex aspect-[800/860] flex-col items-center justify-center gap-[8%] overflow-hidden rounded-[5px] ${
+                  iss.icon || iss.logo ? "bg-[oklch(0.93_0.025_82)] ring-1 ring-rule" : ""
+                }`}
+              >
+                {/* eslint-disable @next/next/no-img-element */}
+                {iss.icon && <img src={iss.icon} alt="" loading="lazy" className="w-[38%] mix-blend-multiply contrast-[0.9] saturate-[0.3] sepia-[0.35]" />}
+                {iss.logo && (
+                  <img src={iss.logo} alt={`${iss.lead} logo`} loading="lazy" className="w-[74%] mix-blend-multiply contrast-[0.9] saturate-[0.3] sepia-[0.35]" />
+                )}
+                {/* eslint-enable @next/next/no-img-element */}
+                {(iss.icon || iss.logo) && (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 opacity-60 mix-blend-multiply [background-image:radial-gradient(oklch(0.2_0.02_60/0.18)_0.7px,transparent_0.9px)] [background-size:3px_3px]"
+                  />
+                )}
+              </div>
+              <p className="font-display text-xl leading-tight font-bold italic">{iss.lead}</p>
+              <div className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
+                {iss.current ? (
+                  <a href={`#${contents.feature.id}`} className="rounded-[3px] bg-marker px-1 text-on-marker after:absolute after:inset-0">
+                      You&rsquo;re reading it
+                    </a>
+                ) : archived(iss.archive) ? (
+                  <IssuePopup project={archived(iss.archive)!} />
+                ) : iss.href ? (
+                  <a href={iss.href} target="_blank" rel="noopener noreferrer" className="marker inline-flex items-center gap-0.5">
+                    Try the demo <ArrowUpRight className="size-3" />
+                  </a>
+                ) : (
+                  "In production"
+                )}
+              </div>
+              </div>
+            </CoverFrame>
           </li>
         ))}
         <li className="reveal col-span-2 flex flex-col justify-between rounded-lg border border-ink p-5 sm:ml-auto sm:max-w-xs" style={delay(240)}>

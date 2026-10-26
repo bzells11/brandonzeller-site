@@ -4,7 +4,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 
 // Tilts the cover a few degrees toward the cursor, like picking a magazine up off a table.
 // Desktop mice only, skipped for reduced motion, and batched to one update per frame.
-export function CoverTilt({ children }: { children: ReactNode }) {
+export function CoverTilt({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export function CoverTilt({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={ref} className="cover-3d">
+    <div ref={ref} className={`cover-3d ${className}`}>
       {children}
     </div>
   );
