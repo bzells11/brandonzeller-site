@@ -48,16 +48,15 @@ export function Feature() {
         .map((p) => (
           <FeatureStory key={p.id} project={p} />
         ))}
-      <FromTheArchive projects={site.projects.filter((p) => p.size !== "feature")} />
     </Section>
   );
 }
 
-// Earlier projects, run after the cover story as a look back at older issues on the shelf.
+// Earlier projects, written up under the shelf next to their own covers.
 function FromTheArchive({ projects }: { projects: Project[] }) {
   if (projects.length === 0) return null;
   return (
-    <div className="mt-20 sm:mt-24">
+    <div className="mt-16 sm:mt-20">
       <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
         <Kicker>From the archive</Kicker>
         <Kicker className="text-muted">Earlier issues</Kicker>
@@ -274,6 +273,7 @@ export function BackPage() {
         </div>
       </div>
       <BackIssues />
+      <FromTheArchive projects={site.projects.filter((p) => p.size !== "feature")} />
     </Section>
   );
 }
@@ -333,7 +333,7 @@ function Vinyl() {
 function BackIssues() {
   return (
     <div className="mt-16 sm:mt-20">
-      <p className="border-b-[3px] border-ink pb-2 font-sans text-kicker font-semibold uppercase">Back issues</p>
+      <p className="border-b-[3px] border-ink pb-2 font-sans text-kicker font-semibold uppercase">Every issue</p>
       <ul className="mt-6 grid grid-cols-2 gap-4 sm:flex sm:items-stretch sm:gap-6">
         {site.issues.map((iss, i) => (
           <li

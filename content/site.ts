@@ -61,7 +61,7 @@ export const site = {
   // The site is laid out like a magazine issue. Bump these whenever you like.
   issue: { number: "01", season: "Fall 2026" },
 
-  // Shelf of issues on the back page. Each issue is one project, and its cover shows that
+  // "Every issue" shelf on the back page: past, current, and upcoming. Each issue is one project, and its cover shows that
   // project's icon and wordmark (put the files in /public/issues; either one is optional). When you ship your next big project,
   // add it here as a new issue (and move "current" to it).
   issues: [
