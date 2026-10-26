@@ -70,13 +70,6 @@ export const site = {
     "Right now I'm most interested in where business and technology overlap, and in entrepreneurship.",
   ],
 
-  // Hover footnotes. Each one attaches to the first place its "after" text appears in that section.
-  footnotes: [
-    { section: "about", after: "Syosset, Long Island", note: "All five jobs on this page were on Long Island." },
-    { section: "about", after: "Claude Code", note: "Certified, too: Claude Code 101, from Anthropic." },
-    { section: "work", after: "real-time hints", note: "Yes, the voice on the speaker giving you hints was me." },
-  ],
-
   // Quick facts shown next to the intro.
   facts: [
     { label: "Hometown", value: "Syosset, Long Island" },

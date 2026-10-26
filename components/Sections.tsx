@@ -1,25 +1,9 @@
 import Link from "next/link";
 import { site, type Project } from "@/content/site";
 import { contents } from "./contents";
-import { Footnote } from "./Footnote";
 import { WaitChart } from "./WaitChart";
 import { InView } from "./InView";
-import type { ReactNode } from "react";
 import { ArrowUpRight, Barcode, Container, Kicker, MaskTitle, Section, buttonStyles, delay, readTime } from "./ui";
-
-// Drops hover footnotes (from content/site.ts) into a run of text, right after their anchor phrase.
-function annotate(text: string, section: string): ReactNode {
-  let nodes: ReactNode[] = [text];
-  site.footnotes.forEach((f, i) => {
-    if (f.section !== section) return;
-    nodes = nodes.flatMap((node): ReactNode[] => {
-      if (typeof node !== "string" || !node.includes(f.after)) return [node];
-      const at = node.indexOf(f.after) + f.after.length;
-      return [node.slice(0, at), <Footnote key={i} n={i + 1}>{f.note}</Footnote>, node.slice(at)];
-    });
-  });
-  return nodes;
-}
 
 export function Intro() {
   const c = contents.intro;
@@ -29,10 +13,10 @@ export function Intro() {
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
         <MaskTitle className="text-h1 italic lg:col-span-12">{c.title}.</MaskTitle>
         <div className="reveal lg:col-span-7" style={delay(150)}>
-          <p className="drop-cap text-body">{annotate(lead, "about")}</p>
+          <p className="drop-cap text-body">{lead}</p>
           {rest.map((p) => (
             <p key={p} className="mt-5 text-body">
-              {annotate(p, "about")}
+              {p}
             </p>
           ))}
         </div>
@@ -148,7 +132,7 @@ export function Work() {
                 {job.org} <span className="text-muted">· {job.location}</span>
               </p>
             </div>
-            <p className="text-lg leading-relaxed">{annotate(job.summary, "work")}</p>
+            <p className="text-lg leading-relaxed">{job.summary}</p>
             <p className="font-sans text-kicker font-semibold tracking-[0.1em] uppercase text-muted lg:text-right">{job.dates}</p>
           </InView>
         ))}
