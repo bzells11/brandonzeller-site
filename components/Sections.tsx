@@ -66,9 +66,21 @@ function FeatureStory({ project: p }: { project: Project }) {
               See {p.name} <ArrowUpRight />
             </a>
           )}
+          {p.tags.length > 0 && (
+            <div className="mt-10">
+              <Kicker className="border-b-[3px] border-ink pb-2">Built with</Kicker>
+              <ul className="grid grid-cols-2 gap-x-6 font-sans text-sm sm:grid-cols-3">
+                {p.tags.map((t) => (
+                  <li key={t} className="border-b border-rule py-2.5 font-medium">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
-        <div className="space-y-10 lg:col-span-5 lg:col-start-8">
+        <div className="lg:col-span-5 lg:col-start-8">
           <InView as="figure" className="border border-ink bg-paper p-5 sm:p-6">
             <Kicker>Fig. 1 · Nearest urgent care, by wait</Kicker>
             <div className="mt-5">
@@ -86,18 +98,6 @@ function FeatureStory({ project: p }: { project: Project }) {
             </figcaption>
           </InView>
 
-          {p.tags.length > 0 && (
-            <div>
-              <Kicker className="border-b-[3px] border-ink pb-2">Built with</Kicker>
-              <ul className="grid grid-cols-2 gap-x-5 font-sans text-sm lg:grid-cols-1">
-                {p.tags.map((t) => (
-                  <li key={t} className="border-b border-rule py-2.5 font-medium">
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       </InView>
     </article>
