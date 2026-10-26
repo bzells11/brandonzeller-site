@@ -1,0 +1,253 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Design tokens. The site is set like a printed magazine:
+   warm paper, near-black ink, one highlighter yellow.
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  /* Color (OKLCH). Paper and ink share one warm hue. */
+  --color-paper: oklch(0.968 0.011 85);
+  --color-paper-2: oklch(0.938 0.016 82);
+  --color-ink: oklch(0.2 0.012 60);
+  --color-muted: oklch(0.4 0.014 60);
+  --color-rule: oklch(0.83 0.016 80);
+  --color-marker: oklch(0.91 0.18 103);
+  --color-cover: oklch(0.52 0.12 245);
+
+  /* Type */
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+  --font-display: var(--font-bodoni), ui-serif, Georgia, serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, sans-serif;
+
+  /* Fluid type scale: 360px phones to 1440px desktops */
+  --text-mega: clamp(4rem, 1.5rem + 11vw, 11rem);
+  --text-mega--line-height: 0.85;
+  --text-mega--letter-spacing: -0.035em;
+  --text-h1: clamp(3rem, 1.9rem + 4.8vw, 6.5rem);
+  --text-h1--line-height: 0.92;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h2: clamp(2.25rem, 1.7rem + 2.4vw, 4rem);
+  --text-h2--line-height: 1;
+  --text-h2--letter-spacing: -0.02em;
+  --text-deck: clamp(1.375rem, 1.15rem + 0.95vw, 2rem);
+  --text-deck--line-height: 1.25;
+  --text-body: clamp(1.1875rem, 1.13rem + 0.25vw, 1.375rem);
+  --text-body--line-height: 1.65;
+  --text-kicker: 0.8125rem;
+  --text-kicker--line-height: 1.3;
+  --text-kicker--letter-spacing: 0.1em;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+  }
+
+  .font-display {
+    font-variation-settings: "opsz" 12;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    /* A smaller optical size keeps Bodoni's hairlines thick enough to read at large sizes. */
+    font-variation-settings: "opsz" 12;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+
+  section[id] {
+    scroll-margin-top: 4rem;
+  }
+
+  ::selection {
+    background: var(--color-marker);
+    color: var(--color-ink);
+  }
+}
+
+/* Highlighter swipe used on links and the contents list. Covers the whole word, left to right. */
+@utility marker {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -0.1em -0.3em;
+    z-index: -1;
+    background: var(--color-marker);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out-expo);
+  }
+
+  &:hover::before,
+  &:focus-visible::before {
+    transform: scaleX(1);
+  }
+}
+
+/* First letter of a story, set big. */
+@utility drop-cap {
+  &::first-letter {
+    float: left;
+    font-family: var(--font-display);
+    font-size: 4.6em;
+    font-weight: 700;
+    font-variation-settings: "opsz" 12;
+    line-height: 0.8;
+    padding: 0.06em 0.1em 0 0;
+  }
+}
+
+/* ───────────────────────── Motion ─────────────────────────
+   Everything animates transform or opacity only, so it runs on the GPU.
+   Scroll reveals are driven by InView (it adds data-shown); the html.js
+   class means content stays visible if JavaScript never loads. */
+@keyframes cover-in {
+  from {
+    transform: translateY(40px) rotate(-4deg);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Cover: resting tilt plus a small 3D lean toward the cursor (see CoverTilt). */
+.cover-3d {
+  perspective: 1400px;
+}
+
+.cover-tilt {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(var(--tilt, 0deg));
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+/* Headline that slides up from behind its own baseline. Clip leaves room for italic overhangs. */
+.mask {
+  display: block;
+  clip-path: inset(-0.1em -0.6em -0.2em -0.6em);
+}
+
+.mask > span {
+  display: inline-block;
+}
+
+.scroll-progress {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .anim-cover {
+    animation: cover-in 1.2s var(--ease-out-expo) both;
+  }
+  .anim-rise {
+    animation: rise 0.8s var(--ease-out-expo) both;
+  }
+  .anim-spin {
+    animation: spin 24s linear infinite;
+    will-change: transform;
+  }
+
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.8s var(--ease-out-expo),
+      transform 0.8s var(--ease-out-expo);
+    transition-delay: var(--d, 0ms);
+  }
+
+  .js .mask > span {
+    transform: translateY(110%);
+    transition: transform 1.05s var(--ease-out-expo);
+    transition-delay: var(--d, 0ms);
+  }
+
+  .js .draw-rule {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.2s var(--ease-out-expo);
+  }
+
+  .js .bar {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s var(--ease-out-expo);
+    transition-delay: var(--d, 0ms);
+  }
+
+  .js [data-shown] .reveal,
+  .js .reveal[data-shown],
+  .js [data-shown] .mask > span,
+  .js [data-shown] .draw-rule,
+  .js [data-shown] .bar {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Reading-progress line under the nav. Pure CSS, scroll-linked; skipped where unsupported. */
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      display: block;
+      transform-origin: left;
+      animation: grow-x linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
