@@ -32,7 +32,7 @@ export const site = {
     linkedin: "https://www.linkedin.com/in/brandon-z-701502390/",
     github: "https://github.com/bzells11",
   },
-  resumePath: "/resume.pdf",
+  resumePath: "/Brandon_Zeller_Resume.pdf",
   headshot: {
     src: "/headshot.jpg",
     alt: "Brandon Zeller in a grey suit against a blue studio backdrop",

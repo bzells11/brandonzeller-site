@@ -117,7 +117,7 @@ export default function ResumePage() {
                 Download PDF
               </a>
               <div className="hidden bg-paper px-3 pt-3 pb-1.5 text-ink sm:block">
-                <Barcode value="resume.pdf" className="h-8 w-24" />
+                <Barcode value="Brandon_Zeller_Resume.pdf" className="h-8 w-24" />
               </div>
             </div>
           </div>

@@ -176,6 +176,7 @@ function ContentsPage() {
   ];
   return (
     <div className="flex h-full flex-col">
+      <Kicker className="anim-rise mb-3 text-muted">Personal Magazine Portfolio</Kicker>
       <div className="anim-rise flex items-baseline justify-between border-b-[3px] border-ink pb-2">
         <p className="font-display text-h2 italic">Contents</p>
         <Kicker className="text-muted">

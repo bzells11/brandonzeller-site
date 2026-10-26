@@ -261,8 +261,11 @@ export function BackCover() {
         </ul>
 
         <div className="mt-16 border-t border-paper/30 pt-8">
-          <div className="flex items-end justify-between gap-5 sm:justify-end">
-            <p className="font-sans text-xs opacity-70">{site.contact.copyright}</p>
+          <div className="flex items-end justify-between gap-5">
+            <div className="font-sans text-xs opacity-70">
+              <p>Designed as a magazine issue. Page numbers are for show.</p>
+              <p className="mt-1">{site.contact.copyright}</p>
+            </div>
             <div className="bg-paper px-3 pt-3 pb-1.5 text-ink">
               <Barcode value={site.url.replace("https://", "")} className="h-8 w-28" />
               <p className="mt-1 text-center font-sans text-[0.625rem] font-medium tracking-wide">No. {site.issue.number}</p>

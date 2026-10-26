@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────
 // Resume content for the /resume page. Keep it in sync with
-// public/resume.pdf (the file people download).
+// public/Brandon_Zeller_Resume.pdf (the file people download).
 // ─────────────────────────────────────────────────────────────
 
 export type ResumeEntry = {
