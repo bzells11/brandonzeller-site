@@ -143,7 +143,7 @@ export const site = {
   beyond: {
     music: {
       title: "Music",
-      body: "I produce music, play guitar, and sing. I'm always working on my craft.",
+      body: "I produce music and play guitar. It's how I unwind and stay creative.",
       // Paste a Spotify or SoundCloud *embed* URL here to show a player, e.g.
       // "https://open.spotify.com/embed/track/XXXXXXXX" or
       // "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/you/track"
