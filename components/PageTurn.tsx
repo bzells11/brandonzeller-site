@@ -48,7 +48,7 @@ export function PageTurn() {
           const swell = Math.sin(Math.PI * p);
           sheet.style.setProperty("--a", `${from + (to - from) * e}deg`);
           sheet.style.setProperty("--b", `${(dir * CURL * swell) / STRIPS}deg`);
-          sheet.style.setProperty("--s", `${0.6 * swell}`);
+          sheet.style.setProperty("--s", `${0.45 * swell}`);
           cast.style.opacity = `${castFrom + (castTo - castFrom) * e}`;
           if (p < 1) requestAnimationFrame(frame);
           else resolve();
@@ -73,8 +73,9 @@ export function PageTurn() {
       const cast = el.querySelector<HTMLElement>("[data-cast]")!;
       const sheetIn = el.querySelector<HTMLElement>('[data-sheet="in"]')!;
       const sheetOut = el.querySelector<HTMLElement>('[data-sheet="out"]')!;
-      el.style.setProperty("--w", `${el.clientWidth}px`);
+      // Unhide before measuring: a hidden stage is 0px wide, which would collapse every strip.
       el.hidden = false;
+      el.style.setProperty("--w", `${el.clientWidth}px`);
 
       // Turn in: hinged on the right edge, the sheet swings up from behind the screen and lands flat.
       sheetIn.hidden = false;
@@ -122,56 +123,64 @@ export function PageTurn() {
       {/* Shadow the turning sheet casts on the page underneath. */}
       <span data-cast className="absolute inset-0 bg-ink opacity-0" />
       <div data-sheet="in" hidden className="absolute inset-0 [perspective:250vw] [transform-style:preserve-3d]">
-        <Strip i={0} hinge="right">{front}</Strip>
+        {Array.from({ length: STRIPS }, (_, i) => (
+          <Strip key={i} i={i} hinge="right">
+            {front}
+          </Strip>
+        ))}
       </div>
       <div data-sheet="out" hidden className="absolute inset-0 [perspective:250vw] [transform-style:preserve-3d]">
-        <Strip i={0} hinge="left">{front}</Strip>
+        {Array.from({ length: STRIPS }, (_, i) => (
+          <Strip key={i} i={i} hinge="left">
+            {front}
+          </Strip>
+        ))}
       </div>
     </div>
   );
 }
 
-// One strip of the sheet, with the next strip hanging off its free edge. The first strip turns on
-// the hinge (--a); every later one bends a little more relative to its neighbor (--b).
+// One strip of the sheet. Every strip sits at the hinge and is carried out to its place by the
+// same chain of moves: turn on the hinge (--a), then for each strip before it, step one strip
+// width and bend a little more (--b). The strips are siblings rather than nested, because Chrome
+// draws a bright seam through deeply nested 3D layers.
 function Strip({ i, hinge, children }: { i: number; hinge: Hinge; children: ReactNode }) {
   const free = hinge === "left" ? "right" : "left";
   // How far this strip's slice sits from the left edge of the page, in strips.
   const slot = hinge === "left" ? i : STRIPS - 1 - i;
-  // Darker toward the free edge, where the paper curls most.
-  const shade = { opacity: `calc(var(--s, 0) * ${(i + 1) / STRIPS})` };
+  const step = `calc(var(--w) / ${STRIPS} * ${hinge === "left" ? 1 : -1})`;
+  // Darker toward the free edge, where the paper curls most. Each strip fades from its neighbor's
+  // shade to its own, so the sheet shades smoothly instead of in bands.
+  const tone = (n: number) => `oklch(0.2 0.02 60 / calc(var(--s, 0) * ${n / STRIPS}))`;
+  const shade = { backgroundImage: `linear-gradient(to ${free}, ${tone(i)}, ${tone(i + 1)})` };
 
   return (
     <div
       className="absolute inset-y-0 [transform-style:preserve-3d]"
       style={{
         width: `calc(var(--w) / ${STRIPS})`,
-        [hinge]: i === 0 ? 0 : "100%",
+        [hinge]: 0,
         transformOrigin: hinge,
-        transform: i === 0 ? "rotateY(var(--a, 0deg))" : "rotateY(var(--b, 0deg))",
+        transform: ["rotateY(var(--a, 0deg))", ...Array.from({ length: i }, () => `translateX(${step}) rotateY(var(--b, 0deg))`)].join(" "),
       }}
     >
-      {/* Front face: this strip's slice of the page. A hair of overlap hides seams between strips. */}
-      <div className="absolute inset-y-0 overflow-hidden bg-paper [backface-visibility:hidden]" style={{ [hinge]: 0, [free]: "-1px" }}>
+      {/* Front face: this strip's slice of the page. A sliver of overlap hides seams between strips. */}
+      <div className="absolute inset-y-0 overflow-hidden bg-paper [backface-visibility:hidden]" style={{ [hinge]: 0, [free]: "-2px" }}>
         <div
           className="absolute inset-y-0 flex flex-col items-center justify-center"
           style={{ width: "var(--w)", left: `calc(var(--w) * ${-slot} / ${STRIPS})` }}
         >
           {children}
         </div>
-        <span className="absolute inset-0 bg-ink" style={shade} />
+        <span className="absolute inset-0" style={shade} />
       </div>
       {/* Back face, seen once the strip has turned past edge-on. */}
       <div
         className="absolute inset-y-0 bg-paper-2 [backface-visibility:hidden] [transform:rotateY(180deg)]"
-        style={{ [hinge]: 0, [free]: "-1px" }}
+        style={{ [hinge]: 0, [free]: "-2px" }}
       >
-        <span className="absolute inset-0 bg-ink" style={shade} />
+        <span className="absolute inset-0" style={shade} />
       </div>
-      {i < STRIPS - 1 && (
-        <Strip i={i + 1} hinge={hinge}>
-          {children}
-        </Strip>
-      )}
     </div>
   );
 }
