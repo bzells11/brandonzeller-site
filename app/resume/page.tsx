@@ -130,7 +130,7 @@ export default function ResumePage() {
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="mt-16 grid gap-4 lg:mt-20 lg:grid-cols-12 lg:gap-12">
-      <h2 className="font-display text-4xl leading-tight italic lg:sticky lg:top-20 lg:col-span-3 lg:self-start lg:border-t-[3px] lg:border-ink lg:pt-5 lg:pr-4 lg:text-[2.5rem]">
+      <h2 className="sticky top-[57px] z-10 -mx-4 border-b border-ink bg-paper px-4 py-2.5 font-display text-3xl leading-tight italic sm:-mx-8 sm:px-8 lg:top-20 lg:col-span-3 lg:mx-0 lg:self-start lg:border-t-[3px] lg:border-b-0 lg:bg-transparent lg:px-0 lg:py-0 lg:pt-5 lg:pr-4 lg:text-[2.5rem]">
         {title}
       </h2>
       <InView className="reveal border-t-[3px] border-ink lg:col-span-9">{children}</InView>

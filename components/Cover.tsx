@@ -91,11 +91,13 @@ function CoverPage() {
 
             <a
               href={`#${contents.work.id}`}
-              className="absolute bottom-[4cqw] left-[4cqw] max-w-[40cqw] bg-ink p-[2.5cqw] text-paper transition-transform duration-500 ease-easy hover:-translate-y-1"
+              className="absolute bottom-[4cqw] left-[4cqw] max-w-[54cqw] bg-ink p-[2.5cqw] text-paper transition-transform duration-500 ease-easy hover:-translate-y-1"
             >
               <span className="block font-sans text-[3.1cqw] leading-snug font-bold uppercase tracking-wide">
-                Five jobs, in brief{" "}
-                <span className="tabular-nums">p.{contents.work.page}</span>
+                Five jobs,{" "}
+                <span className="whitespace-nowrap">
+                  real experience <span className="tabular-nums">p.{contents.work.page}</span>
+                </span>
               </span>
             </a>
 

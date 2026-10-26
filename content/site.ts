@@ -127,7 +127,7 @@ export const site = {
   ],
 
   involvement: [
-    { org: "Builders", detail: "Ohio State entrepreneurship program", role: "Member", dates: "" },
+    { org: "Builders", detail: "Ohio State entrepreneurship program", role: "Member", dates: "2026 – Present" },
     { org: "Artificial Intelligence Club", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
     { org: "Jewish Buckeyes in Business", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
     { org: "Entrepreneurship Club", detail: "Syosset High School", role: "Treasurer", dates: "2025 – 2026" },
