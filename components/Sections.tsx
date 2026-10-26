@@ -297,7 +297,7 @@ function BackIssues() {
               {iss.headline}
             </p>
             {/* Same portrait proportions as the big cover, so the photo isn't squashed. */}
-            <div className="relative my-2 aspect-[800/860] overflow-hidden">
+            <div className="relative my-2 aspect-[800/860] overflow-hidden rounded-[3px]">
               {iss.image && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
