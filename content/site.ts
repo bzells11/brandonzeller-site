@@ -107,7 +107,7 @@ export const site = {
         "AI acquisitions agent for real estate wholesalers: texts motivated sellers, qualifies leads through AI conversation, and flags hot deals on a dashboard.",
       tags: ["Claude API", "Twilio", "Railway"],
       status: "Prototype",
-      note: "Built as an MVP in spring 2026",
+      note: "No. 00 · The pilot issue · Built as an MVP in spring 2026",
       href: "https://rewai-demo.vercel.app",
       logo: "/issues/rewai.webp",
       size: "standard",

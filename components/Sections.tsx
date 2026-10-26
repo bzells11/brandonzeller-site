@@ -48,17 +48,20 @@ export function Feature() {
         .map((p) => (
           <FeatureStory key={p.id} project={p} />
         ))}
-      <AlsoInThisIssue projects={site.projects.filter((p) => p.size !== "feature")} />
+      <FromTheArchive projects={site.projects.filter((p) => p.size !== "feature")} />
     </Section>
   );
 }
 
-// Smaller projects, run after the cover story like a magazine's "also in this issue" column.
-function AlsoInThisIssue({ projects }: { projects: Project[] }) {
+// Earlier projects, run after the cover story as a look back at older issues on the shelf.
+function FromTheArchive({ projects }: { projects: Project[] }) {
   if (projects.length === 0) return null;
   return (
     <div className="mt-20 sm:mt-24">
-      <Kicker className="border-b-[3px] border-ink pb-2">Also in this issue</Kicker>
+      <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
+        <Kicker>From the archive</Kicker>
+        <Kicker className="text-muted">Earlier issues</Kicker>
+      </div>
       <ul>
         {projects.map((p) => (
           <InView
