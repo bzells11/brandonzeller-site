@@ -3,7 +3,7 @@ import { site, type Project } from "@/content/site";
 import { contents } from "./contents";
 import { WaitChart } from "./WaitChart";
 import { InView } from "./InView";
-import { ArrowUpRight, Barcode, Container, Kicker, MaskTitle, Section, buttonStyles, delay, readTime } from "./ui";
+import { ArrowDown, ArrowUpRight, Barcode, Container, Kicker, MaskTitle, Section, buttonStyles, delay, readTime } from "./ui";
 
 export function Intro() {
   const c = contents.intro;
@@ -66,7 +66,8 @@ function FromTheArchive({ projects }: { projects: Project[] }) {
           <InView
             as="li"
             key={p.id}
-            className="reveal grid gap-6 border-b border-rule py-8 sm:grid-cols-[11rem_1fr] sm:gap-8 lg:grid-cols-[13rem_1fr_auto] lg:items-center lg:gap-12"
+            id={p.id}
+            className="reveal scroll-mt-24 grid gap-6 border-b border-rule py-8 sm:grid-cols-[11rem_1fr] sm:gap-8 lg:grid-cols-[13rem_1fr_auto] lg:items-center lg:gap-12"
           >
             {p.logo && (
               <div className="flex aspect-[16/10] w-full max-w-[13rem] items-center justify-center rounded-[5px] bg-[oklch(0.93_0.025_82)] p-5 ring-1 ring-rule">
@@ -382,10 +383,19 @@ function BackIssues() {
             <p className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
               {iss.current ? (
                 <span className="rounded-[3px] bg-marker px-1 text-on-marker">You&rsquo;re reading it</span>
-              ) : iss.href ? (
-                <a href={iss.href} target="_blank" rel="noopener noreferrer" className="marker inline-flex items-center gap-0.5">
-                  Try the demo <ArrowUpRight className="size-3" />
-                </a>
+              ) : iss.archive || iss.href ? (
+                <span className="flex flex-col items-start gap-1">
+                  {iss.archive && (
+                    <a href={`#${iss.archive}`} className="marker inline-flex items-center gap-0.5">
+                      Learn more <ArrowDown className="size-3" />
+                    </a>
+                  )}
+                  {iss.href && (
+                    <a href={iss.href} target="_blank" rel="noopener noreferrer" className="marker inline-flex items-center gap-0.5">
+                      Try the demo <ArrowUpRight className="size-3" />
+                    </a>
+                  )}
+                </span>
               ) : (
                 "In production"
               )}
