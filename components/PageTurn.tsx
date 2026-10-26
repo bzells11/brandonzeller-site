@@ -35,28 +35,33 @@ export function PageTurn() {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
 
-    // Drives one turn frame by frame: --a is the hinge angle, --b the extra bend per strip,
-    // --s how dark the curl is. All three swell and settle with the turn.
-    const turn = (sheet: HTMLElement, cast: HTMLElement, from: number, to: number, castFrom: number, castTo: number, duration: number) =>
-      new Promise<void>((resolve) => {
-        const start = performance.now();
-        const dir = Math.sign(to - from);
-        const frame = (now: number) => {
-          const p = Math.min(1, (now - start) / duration);
-          // Slow lift, quick sweep through the middle, soft landing.
-          const e = p < 0.5 ? 4 * p ** 3 : 1 - (-2 * p + 2) ** 3 / 2;
-          // sin² rather than sin: the curl eases out to zero speed as the page lands, so it settles
-          // flat with the hinge instead of snapping flat in the last frame.
-          const swell = Math.sin(Math.PI * p) ** 2;
-          sheet.style.setProperty("--a", `${from + (to - from) * e}deg`);
-          sheet.style.setProperty("--b", `${(dir * CURL * swell) / STRIPS}deg`);
-          sheet.style.setProperty("--s", `${0.45 * swell}`);
-          cast.style.opacity = `${castFrom + (castTo - castFrom) * e}`;
-          if (p < 1) requestAnimationFrame(frame);
-          else resolve();
-        };
-        requestAnimationFrame(frame);
+    // Plays one turn. Every strip's whole path is worked out up front as keyframes and handed to
+    // the browser, which runs transform and opacity animations off the main thread, so the turn stays
+    // smooth even while the page underneath is busy scrolling and revealing. Each keyframe turns the
+    // sheet on its hinge, then bends every strip a little more than the one before it.
+    const turn = (sheet: HTMLElement, cast: HTMLElement, w: number, from: number, to: number, castFrom: number, castTo: number, duration: number, delay = 0) => {
+      const step = ((sheet.dataset.sheet === "out" ? 1 : -1) * w) / STRIPS;
+      const dir = Math.sign(to - from);
+      const steps = Array.from({ length: 61 }, (_, k) => {
+        const p = k / 60;
+        // Slow lift, quick sweep through the middle, soft landing.
+        const e = p < 0.5 ? 4 * p ** 3 : 1 - (-2 * p + 2) ** 3 / 2;
+        // sin² rather than sin: the curl starts and settles at zero speed, in step with the hinge.
+        const swell = Math.sin(Math.PI * p) ** 2;
+        return { a: from + (to - from) * e, b: (dir * CURL * swell) / STRIPS, swell, e };
       });
+      const timing = { duration, delay, easing: "linear", fill: "both" } as const;
+
+      const runs = [...sheet.querySelectorAll<HTMLElement>("[data-strip]")].map((strip, i) =>
+        strip.animate(
+          steps.map(({ a, b }) => ({ transform: `rotateY(${a}deg)` + ` translateX(${step}px) rotateY(${b}deg)`.repeat(i) })),
+          timing,
+        ),
+      );
+      sheet.querySelectorAll<HTMLElement>("[data-shade]").forEach((shade) => shade.animate(steps.map(({ swell }) => ({ opacity: 0.45 * swell })), timing));
+      cast.animate(steps.map(({ e }) => ({ opacity: castFrom + (castTo - castFrom) * e })), timing);
+      return Promise.all(runs.map((r) => r.finished));
+    };
 
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -77,12 +82,13 @@ export function PageTurn() {
       const sheetOut = el.querySelector<HTMLElement>('[data-sheet="out"]')!;
       // Unhide before measuring: a hidden stage is 0px wide, which would collapse every strip.
       el.hidden = false;
-      el.style.setProperty("--w", `${el.clientWidth}px`);
+      const w = el.clientWidth;
+      el.style.setProperty("--w", `${w}px`);
 
       // Turn in: hinged on the right edge, the sheet swings up from behind the screen and lands flat.
       sheetIn.hidden = false;
       sheetOut.hidden = true;
-      turn(sheetIn, cast, -180, 0, 0, 0.3, 750)
+      turn(sheetIn, cast, w, -180, 0, 0, 0.3, 750)
         .then(() => {
           const root = document.documentElement;
           const prev = root.style.scrollBehavior;
@@ -91,18 +97,16 @@ export function PageTurn() {
           root.style.scrollBehavior = prev;
           history.pushState(null, "", `#${id}`);
 
-          // Swap to the left-hinged sheet. Both lie flat here, so the swap can't be seen.
-          sheetOut.style.setProperty("--a", "0deg");
-          sheetOut.style.setProperty("--b", "0deg");
-          sheetOut.style.setProperty("--s", "0");
+          // Swap to the left-hinged sheet. Both lie flat here, so the swap can't be seen. The short
+          // delay lets the page land and rest before it turns away.
           sheetOut.hidden = false;
           sheetIn.hidden = true;
-          return new Promise((r) => setTimeout(r, 180));
+          // Turn away: hinged on the left edge, the free edge tips back away from you and the sheet curls off to the left.
+          return turn(sheetOut, cast, w, 0, 180, 0.3, 0, 950, 180);
         })
-        // Turn away: hinged on the left edge, the free edge tips back away from you and the sheet curls off to the left.
-        .then(() => turn(sheetOut, cast, 0, 180, 0.3, 0, 950))
         .then(() => {
           el.hidden = true;
+          el.getAnimations({ subtree: true }).forEach((a) => a.cancel());
           target.setAttribute("tabindex", "-1");
           target.focus({ preventScroll: true });
           busy = false;
@@ -124,14 +128,14 @@ export function PageTurn() {
     <div ref={stage} aria-hidden="true" hidden className="pointer-events-none fixed inset-0 z-[60] overflow-hidden">
       {/* Shadow the turning sheet casts on the page underneath. */}
       <span data-cast className="absolute inset-0 bg-ink opacity-0" />
-      <div data-sheet="in" hidden className="absolute inset-0 [perspective:250vw] [transform-style:preserve-3d]">
+      <div data-sheet="in" hidden className="absolute inset-0 [perspective:350vw] [transform-style:preserve-3d]">
         {Array.from({ length: STRIPS }, (_, i) => (
           <Strip key={i} i={i} hinge="right">
             {front}
           </Strip>
         ))}
       </div>
-      <div data-sheet="out" hidden className="absolute inset-0 [perspective:250vw] [transform-style:preserve-3d]">
+      <div data-sheet="out" hidden className="absolute inset-0 [perspective:350vw] [transform-style:preserve-3d]">
         {Array.from({ length: STRIPS }, (_, i) => (
           <Strip key={i} i={i} hinge="left">
             {front}
@@ -142,28 +146,27 @@ export function PageTurn() {
   );
 }
 
-// One strip of the sheet. Every strip sits at the hinge and is carried out to its place by the
-// same chain of moves: turn on the hinge (--a), then for each strip before it, step one strip
-// width and bend a little more (--b). The strips are siblings rather than nested, because Chrome
-// draws a bright seam through deeply nested 3D layers.
+// One strip of the sheet. Every strip sits at the hinge and is carried out to its place by
+// translateX at rest, or by the turn's keyframes while it moves. The strips are siblings rather
+// than nested, because Chrome draws a bright seam through deeply nested 3D layers.
 function Strip({ i, hinge, children }: { i: number; hinge: Hinge; children: ReactNode }) {
   const free = hinge === "left" ? "right" : "left";
   // How far this strip's slice sits from the left edge of the page, in strips.
   const slot = hinge === "left" ? i : STRIPS - 1 - i;
-  const step = `calc(var(--w) / ${STRIPS} * ${hinge === "left" ? 1 : -1})`;
   // Darker toward the free edge, where the paper curls most. Each strip fades from its neighbor's
-  // shade to its own, so the sheet shades smoothly instead of in bands.
-  const tone = (n: number) => `oklch(0.2 0.02 60 / calc(var(--s, 0) * ${n / STRIPS}))`;
+  // shade to its own, so the sheet shades smoothly instead of in bands. The turn fades it in and out.
+  const tone = (n: number) => `oklch(0.2 0.02 60 / ${n / STRIPS})`;
   const shade = { backgroundImage: `linear-gradient(to ${free}, ${tone(i)}, ${tone(i + 1)})` };
 
   return (
     <div
+      data-strip
       className="absolute inset-y-0 [transform-style:preserve-3d]"
       style={{
         width: `calc(var(--w) / ${STRIPS})`,
         [hinge]: 0,
         transformOrigin: hinge,
-        transform: ["rotateY(var(--a, 0deg))", ...Array.from({ length: i }, () => `translateX(${step}) rotateY(var(--b, 0deg))`)].join(" "),
+        transform: `translateX(calc(var(--w) * ${(hinge === "left" ? i : -i) / STRIPS}))`,
       }}
     >
       {/* Front face: this strip's slice of the page. A sliver of overlap hides seams between strips. */}
@@ -174,14 +177,14 @@ function Strip({ i, hinge, children }: { i: number; hinge: Hinge; children: Reac
         >
           {children}
         </div>
-        <span className="absolute inset-0" style={shade} />
+        <span data-shade className="absolute inset-0 opacity-0" style={shade} />
       </div>
       {/* Back face, seen once the strip has turned past edge-on. */}
       <div
         className="absolute inset-y-0 bg-paper-2 [backface-visibility:hidden] [transform:rotateY(180deg)]"
         style={{ [hinge]: 0, [free]: "-2px" }}
       >
-        <span className="absolute inset-0" style={shade} />
+        <span data-shade className="absolute inset-0 opacity-0" style={shade} />
       </div>
     </div>
   );
