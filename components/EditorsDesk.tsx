@@ -16,6 +16,8 @@ export function EditorsDesk() {
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof Element && e.target.closest("input, textarea, [contenteditable]")) return;
       const key = e.key.toLowerCase();
+      // Holding Shift (or Caps Lock, etc.) to type a capital letter shouldn't reset the code.
+      if (e.repeat || ["shift", "capslock", "control", "alt", "meta"].includes(key)) return;
 
       if (open && key === "escape") return setOpen(false);
 
