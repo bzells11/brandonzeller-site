@@ -36,8 +36,8 @@ export const site = {
   headshot: {
     src: "/headshot.jpg",
     alt: "Brandon Zeller in a grey suit against a blue studio backdrop",
-    width: 800,
-    height: 935,
+    width: 944,
+    height: 1104,
   },
 
   seo: {

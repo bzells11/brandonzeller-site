@@ -3,7 +3,7 @@
 import sharp from "sharp";
 
 const src = "public/headshot.jpg";
-for (const width of [480, 640, 800]) {
-  await sharp(src).resize({ width }).webp({ quality: 74 }).toFile(`public/headshot-${width}.webp`);
+for (const width of [480, 640, 960]) {
+  await sharp(src).resize({ width }).webp({ quality: 80 }).toFile(`public/headshot-${width}.webp`);
 }
 console.log("Optimized headshot");

@@ -5,12 +5,12 @@ import { contents } from "./contents";
 import { CoverTilt } from "./CoverTilt";
 import { ArrowUpRight, Barcode, Container, Kicker } from "./ui";
 
-const srcSet = "/headshot-480.webp 480w, /headshot-640.webp 640w, /headshot-800.webp 800w";
+const srcSet = "/headshot-480.webp 480w, /headshot-640.webp 640w, /headshot-960.webp 960w";
 const sizes = "(min-width: 1024px) 31rem, 92vw";
 
 // Opening spread: the contents page on the left, the cover on the right.
 export function Cover() {
-  preload("/headshot-800.webp", {
+  preload("/headshot-960.webp", {
     as: "image",
     imageSrcSet: srcSet,
     imageSizes: sizes,
@@ -58,7 +58,7 @@ function CoverPage() {
             {/* Plain img so the browser picks the right size from srcSet (the static export can't resize images). */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/headshot-800.webp"
+              src="/headshot-960.webp"
               srcSet={srcSet}
               sizes={sizes}
               alt={site.headshot.alt}
