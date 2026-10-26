@@ -111,7 +111,7 @@ export default function ResumePage() {
             <div className="flex items-center gap-6">
               <a
                 {...download}
-                className="inline-flex h-14 items-center gap-2 rounded-md bg-marker px-6 font-sans text-base font-semibold text-ink transition-transform duration-500 ease-easy hover:-translate-y-0.5"
+                className="inline-flex h-14 items-center gap-2 rounded-md bg-marker px-6 font-sans text-base font-semibold text-on-marker transition-transform duration-500 ease-easy hover:-translate-y-0.5"
               >
                 <DownloadIcon />
                 Download PDF

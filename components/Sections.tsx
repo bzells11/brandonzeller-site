@@ -1,22 +1,38 @@
 import Link from "next/link";
 import { site, type Project } from "@/content/site";
 import { contents } from "./contents";
+import { Footnote } from "./Footnote";
 import { WaitChart } from "./WaitChart";
 import { InView } from "./InView";
-import { ArrowUpRight, Barcode, Container, Kicker, MaskTitle, Section, buttonStyles, delay } from "./ui";
+import type { ReactNode } from "react";
+import { ArrowUpRight, Barcode, Container, Kicker, MaskTitle, Section, buttonStyles, delay, readTime } from "./ui";
+
+// Drops hover footnotes (from content/site.ts) into a run of text, right after their anchor phrase.
+function annotate(text: string, section: string): ReactNode {
+  let nodes: ReactNode[] = [text];
+  site.footnotes.forEach((f, i) => {
+    if (f.section !== section) return;
+    nodes = nodes.flatMap((node): ReactNode[] => {
+      if (typeof node !== "string" || !node.includes(f.after)) return [node];
+      const at = node.indexOf(f.after) + f.after.length;
+      return [node.slice(0, at), <Footnote key={i} n={i + 1}>{f.note}</Footnote>, node.slice(at)];
+    });
+  });
+  return nodes;
+}
 
 export function Intro() {
   const c = contents.intro;
   const [lead, ...rest] = site.about;
   return (
-    <Section id={c.id} page={c.page} label={c.label}>
+    <Section id={c.id} page={c.page} label={c.label} read={readTime(...site.about, ...site.facts.map((f) => f.value))}>
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
         <MaskTitle className="text-h1 italic lg:col-span-12">{c.title}.</MaskTitle>
         <div className="reveal lg:col-span-7" style={delay(150)}>
-          <p className="drop-cap text-body">{lead}</p>
+          <p className="drop-cap text-body">{annotate(lead, "about")}</p>
           {rest.map((p) => (
             <p key={p} className="mt-5 text-body">
-              {p}
+              {annotate(p, "about")}
             </p>
           ))}
         </div>
@@ -36,7 +52,13 @@ export function Intro() {
 export function Feature() {
   const c = contents.feature;
   return (
-    <Section id={c.id} page={c.page} label={c.label} className="bg-paper-2">
+    <Section
+      id={c.id}
+      page={c.page}
+      label={c.label}
+      read={readTime(...site.projects.flatMap((p) => [p.description, ...(p.story ?? [])]))}
+      className="bg-paper-2"
+    >
       {site.projects.map((p) => (
         <FeatureStory key={p.id} project={p} />
       ))}
@@ -97,6 +119,7 @@ function FeatureStory({ project: p }: { project: Project }) {
               Illustration of the comparison {p.name} makes. Not live data.
             </figcaption>
           </InView>
+          {p.progress && <BuildTracker {...p.progress} />}
 
         </div>
       </InView>
@@ -107,7 +130,7 @@ function FeatureStory({ project: p }: { project: Project }) {
 export function Work() {
   const c = contents.work;
   return (
-    <Section id={c.id} page={c.page} label={c.label}>
+    <Section id={c.id} page={c.page} label={c.label} read={readTime(...site.experience.map((j) => `${j.role} ${j.org} ${j.summary}`))}>
       <MaskTitle className="text-h1 italic">{c.title}.</MaskTitle>
       <ol className="mt-12 border-t border-ink">
         {site.experience.map((job, i) => (
@@ -125,7 +148,7 @@ export function Work() {
                 {job.org} <span className="text-muted">· {job.location}</span>
               </p>
             </div>
-            <p className="text-lg leading-relaxed">{job.summary}</p>
+            <p className="text-lg leading-relaxed">{annotate(job.summary, "work")}</p>
             <p className="font-sans text-kicker font-semibold tracking-[0.1em] uppercase text-muted lg:text-right">{job.dates}</p>
           </InView>
         ))}
@@ -138,7 +161,13 @@ export function Work() {
 export function Masthead() {
   const c = contents.masthead;
   return (
-    <Section id={c.id} page={c.page} label={c.label} className="bg-paper-2">
+    <Section
+      id={c.id}
+      page={c.page}
+      label={c.label}
+      read={readTime(...site.involvement.map((i) => `${i.role} ${i.org} ${i.detail}`), ...site.honors.map((h) => `${h.name} ${h.issuer}`))}
+      className="bg-paper-2"
+    >
       <div className="mx-auto max-w-4xl text-center">
         <MaskTitle className="text-h1 italic">{c.title}.</MaskTitle>
         <div className="mt-14 grid gap-14 md:grid-cols-2 md:gap-10">
@@ -178,7 +207,7 @@ export function BackPage() {
   const c = contents.back;
   const { music, fitness } = site.beyond;
   return (
-    <Section id={c.id} page={c.page} label={c.label}>
+    <Section id={c.id} page={c.page} label={c.label} read={readTime(music.body, fitness.body)}>
       <div className="grid gap-12 lg:grid-cols-12">
         <MaskTitle className="text-h1 italic lg:col-span-12">{c.title}.</MaskTitle>
         <div className="grid gap-10 sm:grid-cols-2 lg:col-span-12">
@@ -210,6 +239,44 @@ export function BackPage() {
   );
 }
 
+// Where the project is, from idea to launch. The line draws in up to the current stage.
+function BuildTracker({ stages, current }: { stages: string[]; current: number }) {
+  const pct = (current / (stages.length - 1)) * 100;
+  return (
+    <InView className="mt-10">
+      <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
+        <Kicker>Build tracker</Kicker>
+        <Kicker className="text-muted">
+          Now: <span className="text-ink">{stages[current]}</span>
+        </Kicker>
+      </div>
+      <ol className="relative mt-6 grid font-sans text-[0.75rem] font-semibold" style={{ gridTemplateColumns: `repeat(${stages.length}, 1fr)` }}>
+        {/* Track runs from the center of the first dot to the center of the last. */}
+        <span aria-hidden="true" className="absolute top-[7px] h-[2px] bg-rule" style={{ left: `${50 / stages.length}%`, right: `${50 / stages.length}%` }} />
+        <span
+          aria-hidden="true"
+          className="absolute top-[7px] h-[2px]"
+          style={{ left: `${50 / stages.length}%`, width: `${(pct / 100) * (100 - 100 / stages.length)}%` }}
+        >
+          <span className="bar block h-full bg-ink" style={delay(200)} />
+        </span>
+        {stages.map((s, i) => (
+          <li key={s} className="flex flex-col items-center text-center">
+            <span
+              className={`relative block size-4 rounded-full border-2 ${
+                i < current ? "border-ink bg-ink" : i === current ? "border-ink bg-marker" : "border-rule bg-paper"
+              }`}
+            >
+              {i === current && <span className="animate-ping-slow absolute -inset-1.5 rounded-full border-2 border-marker" />}
+            </span>
+            <span className={`mt-2 leading-tight ${i > current ? "text-muted" : ""}`}>{s}</span>
+          </li>
+        ))}
+      </ol>
+    </InView>
+  );
+}
+
 // Small record that spins next to the "Now playing" label.
 function Vinyl() {
   return (
@@ -228,7 +295,7 @@ function BackIssues() {
   return (
     <div className="mt-16 sm:mt-20">
       <p className="border-b-[3px] border-ink pb-2 font-sans text-kicker font-semibold uppercase">Back issues</p>
-      <ul className="mt-6 grid grid-cols-2 gap-4 sm:flex sm:gap-6">
+      <ul className="mt-6 grid grid-cols-2 gap-4 sm:flex sm:items-stretch sm:gap-6">
         {site.issues.map((iss, i) => (
           <li
             key={iss.number}
@@ -254,13 +321,26 @@ function BackIssues() {
             <p className="font-display text-xl leading-tight font-bold italic">{iss.lead}</p>
             <p className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
               {iss.current ? (
-                <span className="rounded-[3px] bg-marker px-1 text-ink">You&rsquo;re reading it</span>
+                <span className="rounded-[3px] bg-marker px-1 text-on-marker">You&rsquo;re reading it</span>
               ) : (
                 "In production"
               )}
             </p>
           </li>
         ))}
+        <li className="reveal col-span-2 flex flex-col justify-between rounded-lg border border-ink p-5 sm:ml-auto sm:max-w-xs" style={delay(240)}>
+          <div>
+            <p className="font-sans text-kicker font-semibold uppercase text-muted">Subscribe</p>
+            <p className="mt-2 font-display text-2xl leading-tight font-bold">Get Issue No. 02 when it drops.</p>
+            <p className="mt-2 text-base text-muted">Send me a quick email and I&rsquo;ll let you know when my next project launches.</p>
+          </div>
+          <a
+            href={`mailto:${site.email}?subject=${encodeURIComponent("Subscribe me to Issue No. 02")}&body=${encodeURIComponent("Let me know when your next project launches.")}`}
+            className={`${buttonStyles.primary} mt-5 w-full`}
+          >
+            Subscribe by email <ArrowUpRight />
+          </a>
+        </li>
       </ul>
     </div>
   );
@@ -297,7 +377,7 @@ export function BackCover() {
             { label: "Resume", note: "View or download", href: "/resume", external: false },
           ].map((l, i) => {
             const cls =
-              "group flex items-center justify-between gap-4 rounded-lg border border-paper/40 p-5 transition duration-500 ease-easy hover:-translate-y-1 hover:border-marker hover:bg-marker hover:text-ink sm:p-6";
+              "group flex items-center justify-between gap-4 rounded-lg border border-paper/40 p-5 transition duration-500 ease-easy hover:-translate-y-1 hover:border-marker hover:bg-marker hover:text-on-marker sm:p-6";
             const inner = (
               <>
                 <span>

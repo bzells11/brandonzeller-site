@@ -22,6 +22,8 @@ export type Project = {
   size: "feature" | "standard";
   // Paragraphs for the feature story. Optional.
   story?: string[];
+  // Build tracker on the feature story: the stages, and the index of the one you're on now.
+  progress?: { stages: string[]; current: number };
 };
 
 export const site = {
@@ -68,6 +70,13 @@ export const site = {
     "Right now I'm most interested in where business and technology overlap, and in entrepreneurship.",
   ],
 
+  // Hover footnotes. Each one attaches to the first place its "after" text appears in that section.
+  footnotes: [
+    { section: "about", after: "Syosset, Long Island", note: "All five jobs on this page were on Long Island." },
+    { section: "about", after: "Claude Code", note: "Certified, too: Claude Code 101, from Anthropic." },
+    { section: "work", after: "real-time hints", note: "Yes, the voice on the speaker giving you hints was me." },
+  ],
+
   // Quick facts shown next to the intro.
   facts: [
     { label: "Hometown", value: "Syosset, Long Island" },
@@ -85,6 +94,8 @@ export const site = {
       tags: ["React Native", "Expo", "Node.js", "Supabase", "Google Places API", "Claude AI"],
       status: "Launching Soon",
       size: "feature",
+      // Update "current" as WaitLess moves along (0 = Idea … 4 = App Store).
+      progress: { stages: ["Idea", "Design", "Build", "Beta", "App Store"], current: 2 },
       story: [
         "Urgent care wait times are scattered across clinic websites, if they're even posted at all. WaitLess pulls them into one list and sorts the clinics near you by how long you'd actually wait.",
         "It's an iOS app built with React Native and Expo, with a Node.js and Supabase backend and the Google Places API for finding clinics nearby.",
@@ -154,7 +165,7 @@ export const site = {
       // Paste a Spotify or SoundCloud *embed* URL here to show a player, e.g.
       // "https://open.spotify.com/embed/track/XXXXXXXX" or
       // "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/you/track"
-      embedUrl: "https://open.spotify.com/embed/track/40gvh6jP5qxMJuMmF9lG9A",
+      embedUrl: "",
     },
     fitness: {
       title: "Fitness",

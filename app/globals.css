@@ -12,6 +12,8 @@
   --color-muted: oklch(0.4 0.014 60);
   --color-rule: oklch(0.83 0.016 80);
   --color-marker: oklch(0.91 0.18 103);
+  /* Text that sits on the yellow highlighter. Stays dark in both editions. */
+  --color-on-marker: oklch(0.2 0.012 60);
   --color-cover: oklch(0.52 0.12 245);
 
   /* Type */
@@ -92,7 +94,36 @@
 
   ::selection {
     background: var(--color-marker);
-    color: var(--color-ink);
+    color: var(--color-on-marker);
+  }
+
+  /* Text on the yellow highlighter stays dark, even in the night edition. */
+  .bg-marker,
+  .active\:bg-marker:active {
+    color: var(--color-on-marker);
+  }
+
+  @media (hover: hover) {
+    [class*="hover:bg-marker"]:hover {
+      color: var(--color-on-marker);
+    }
+  }
+}
+
+/* ───────────────────────── Night edition ─────────────────────────
+   Same magazine, printed on black. Toggled from the nav; remembered per visitor. */
+:root[data-theme="night"] {
+  color-scheme: dark;
+  --color-paper: oklch(0.17 0.008 60);
+  --color-paper-2: oklch(0.205 0.01 60);
+  --color-ink: oklch(0.94 0.012 85);
+  --color-muted: oklch(0.73 0.014 75);
+  --color-rule: oklch(0.34 0.012 60);
+}
+
+@layer base {
+  html {
+    transition: background-color 0.5s var(--ease-easy);
   }
 }
 
@@ -113,12 +144,22 @@
     transition: transform 0.5s var(--ease-easy);
   }
 
+  transition: color 0.5s var(--ease-easy);
+
+  &:focus-visible {
+    color: var(--color-on-marker);
+  }
+
   &:focus-visible::before {
     transform: scaleX(1);
   }
 
   /* Mouse hover only, so a tap on a phone doesn't leave the highlight stuck on. */
   @media (hover: hover) {
+    &:hover {
+      color: var(--color-on-marker);
+    }
+
     &:hover::before {
       transform: scaleX(1);
     }
@@ -237,6 +278,43 @@
   }
 }
 
+@keyframes scrap {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  8% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(var(--drift), 112vh) rotate(var(--spin));
+  }
+}
+
+@keyframes ping-slow {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.7);
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes note-in {
+  from {
+    opacity: 0;
+    margin-top: 6px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -291,6 +369,15 @@
   }
   .anim-desk {
     animation: desk-in 0.5s var(--ease-easy) both;
+  }
+  .anim-scrap {
+    animation: scrap 2s cubic-bezier(0.3, 0.1, 0.6, 1) both;
+  }
+  .animate-ping-slow {
+    animation: ping-slow 2.2s var(--ease-easy) infinite;
+  }
+  .anim-note {
+    animation: note-in 0.3s var(--ease-easy) both;
   }
   .anim-spin {
     animation: spin 24s linear infinite;

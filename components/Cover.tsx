@@ -142,7 +142,7 @@ function Sticker({ label }: { label: string }) {
             fontSize="8.4"
             fontWeight="700"
             letterSpacing="1.6"
-            fill="var(--color-ink)"
+            fill="var(--color-on-marker)"
           >
             <textPath href="#sticker-ring">{ring}</textPath>
           </text>
@@ -155,7 +155,7 @@ function Sticker({ label }: { label: string }) {
           fontSize="15"
           fontWeight="700"
           fontStyle="italic"
-          fill="var(--color-ink)"
+          fill="var(--color-on-marker)"
         >
           New
         </text>
@@ -167,7 +167,7 @@ function Sticker({ label }: { label: string }) {
           fontSize="7"
           fontWeight="700"
           letterSpacing="1"
-          fill="var(--color-ink)"
+          fill="var(--color-on-marker)"
         >
           APP
         </text>

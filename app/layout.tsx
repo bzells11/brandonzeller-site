@@ -57,7 +57,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${display.variable} ${serif.variable} ${sans.variable} antialiased`} suppressHydrationWarning>
       <head>
         {/* Lets the scroll-reveal styles hide content only when JavaScript is running. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js');try{if(localStorage.getItem('edition')==='night')document.documentElement.dataset.theme='night'}catch(e){}" }} />
       </head>
       <body className="min-h-dvh">
         {children}
