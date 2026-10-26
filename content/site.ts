@@ -57,11 +57,12 @@ export const site = {
   // The site is laid out like a magazine issue. Bump these whenever you like.
   issue: { number: "01", season: "Fall 2026" },
 
-  // Shelf of issues on the back page. When you ship your next big project,
+  // Shelf of issues on the back page. Each issue is one project, and its cover shows that
+  // project's icon and wordmark (put the files in /public/issues; either one is optional). When you ship your next big project,
   // add it here as a new issue (and move "current" to it).
   issues: [
-    { number: "01", season: "Fall 2026", headline: "The founder issue", lead: "WaitLess", current: true, image: "/headshot-480.webp" },
-    { number: "02", season: "Coming soon", headline: "The next issue", lead: "Next project", current: false, image: "" },
+    { number: "01", season: "Fall 2026", headline: "The founder issue", lead: "WaitLess", current: true, icon: "/issues/waitless-icon.webp", logo: "/issues/waitless-wordmark.webp" },
+    { number: "02", season: "Coming soon", headline: "The next issue", lead: "Next project", current: false, icon: "", logo: "" },
   ],
 
   about: [
@@ -138,14 +139,15 @@ export const site = {
   ],
 
   involvement: [
+    { org: "BuckeyeThon", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
     { org: "Builders", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
     { org: "Artificial Intelligence Club", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
     { org: "Jewish Buckeyes in Business", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
-    { org: "Entrepreneurship Club", detail: "Syosset High School", role: "Treasurer", dates: "2025 – 2026" },
-    { org: "DECA", detail: "Syosset High School", role: "Competitor", dates: "2024 – 2026" },
+    { org: "Entrepreneurship Club", detail: "Syosset High School", role: "Treasurer (2025–26) · Member", dates: "2022 – 2026" },
   ],
 
   honors: [
+    { name: "Certificate of Excellence in Business Communications", issuer: "Syosset High School · Spring 2026" },
     { name: "Business Honors Society", issuer: "Syosset High School" },
     { name: "Claude Code 101", issuer: "Anthropic" },
     { name: "Business Management Certification", issuer: "YouScience" },

@@ -19,7 +19,7 @@ export const resume = {
       org: "The Ohio State University, Max M. Fisher College of Business",
       title: "Bachelor of Science in Business Administration",
       location: "Columbus, OH",
-      dates: "May 2030",
+      dates: "Expected May 2030",
       bullets: [],
     },
     {
@@ -27,7 +27,7 @@ export const resume = {
       title: "High School Diploma",
       location: "Syosset, NY",
       dates: "June 2026",
-      bullets: ["Business Honors Society, recognized for academic excellence in business coursework."],
+      bullets: ["Honors: Certificate of Excellence in Business Communications (Spring 2026); Business Honors Society."],
     },
   ] satisfies ResumeEntry[],
 
@@ -90,6 +90,13 @@ export const resume = {
 
   activities: [
     {
+      org: "BuckeyeThon",
+      title: "Member",
+      location: "Columbus, OH",
+      dates: "October 2026 – Present",
+      bullets: ["Student-run philanthropy raising funds for children with cancer at Nationwide Children’s Hospital."],
+    },
+    {
       org: "Jewish Buckeyes in Business (JBIB)",
       title: "Member",
       location: "Columbus, OH",
@@ -105,17 +112,10 @@ export const resume = {
     },
     {
       org: "Syosset High School Entrepreneurship Club",
-      title: "Treasurer",
+      title: "Treasurer (2025–2026); Member",
       location: "Syosset, NY",
-      dates: "September 2025 – June 2026",
+      dates: "September 2022 – June 2026",
       bullets: ["Managed club finances and supported event planning for member programming."],
-    },
-    {
-      org: "DECA",
-      title: "Member",
-      location: "Syosset, NY",
-      dates: "September 2024 – June 2026",
-      bullets: ["Competed in a national business and marketing program."],
     },
   ] satisfies ResumeEntry[],
 

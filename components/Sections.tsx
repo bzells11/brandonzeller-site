@@ -296,20 +296,16 @@ function BackIssues() {
             <p className="mt-1 border-y border-current py-0.5 text-center font-sans text-[0.5625rem] font-semibold tracking-[0.2em] uppercase">
               {iss.headline}
             </p>
-            {/* Same portrait proportions as the big cover, so the photo isn't squashed. */}
-            <div className="relative my-2 aspect-[800/860] overflow-hidden rounded-[5px]">
-              {iss.image && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={iss.image}
-                  srcSet="/headshot-480.webp 480w, /headshot-640.webp 640w"
-                  sizes="(min-width: 640px) 160px, 45vw"
-                  alt=""
-                  loading="lazy"
-                  // Muted, slightly warm print tone, like an older issue on the shelf.
-                  className="absolute inset-0 size-full object-cover object-[50%_20%] contrast-[0.95] saturate-[0.35] sepia-[0.18]"
-                />
-              )}
+            {/* The project's icon and wordmark on a white panel in the cover's photo frame. */}
+            <div
+              className={`relative my-2 flex aspect-[800/860] flex-col items-center justify-center gap-[8%] overflow-hidden rounded-[5px] ${
+                iss.icon || iss.logo ? "bg-white ring-1 ring-rule" : ""
+              }`}
+            >
+              {/* eslint-disable @next/next/no-img-element */}
+              {iss.icon && <img src={iss.icon} alt="" loading="lazy" className="w-[38%]" />}
+              {iss.logo && <img src={iss.logo} alt={`${iss.lead} logo`} loading="lazy" className="w-[74%]" />}
+              {/* eslint-enable @next/next/no-img-element */}
             </div>
             <p className="font-display text-xl leading-tight font-bold italic">{iss.lead}</p>
             <p className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
