@@ -10,7 +10,12 @@ export function IssuePopup({ project: p }: { project: Project }) {
 
   return (
     <>
-      <button type="button" onClick={() => ref.current?.showModal()} className="marker inline-flex cursor-pointer items-center gap-0.5 uppercase">
+      <button
+        type="button"
+        onClick={() => ref.current?.showModal()}
+        // Stretches over the whole cover, so clicking anywhere on it opens the popup.
+        className="marker inline-flex cursor-pointer items-center gap-0.5 uppercase after:absolute after:inset-0"
+      >
         Learn more
       </button>
       <dialog

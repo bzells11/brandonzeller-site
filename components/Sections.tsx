@@ -289,7 +289,7 @@ function BackIssues() {
         {site.issues.map((iss, i) => (
           <li
             key={iss.number}
-            className={`reveal flex flex-col p-3 sm:w-44 ${
+            className={`reveal relative flex flex-col p-3 sm:w-44 ${
               iss.icon || iss.logo
                 ? "border border-ink bg-paper-2 shadow-[0_14px_30px_-18px_oklch(0.2_0.02_60/0.6)]"
                 : "border border-dashed border-muted text-muted"
