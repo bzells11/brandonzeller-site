@@ -104,7 +104,7 @@ export const site = {
       id: "rew-ai",
       name: "REW AI",
       description:
-        "AI acquisitions agent for real estate wholesalers: texts motivated sellers, qualifies leads through AI conversation, and flags hot deals on a dashboard. It never made it past the prototype. I got on a call with a real wholesaling business and found out they didn't need it, so I stopped building. The lesson stuck: talk to the customer before you write the code.",
+        "AI acquisitions agent for real estate wholesalers: texts motivated sellers, qualifies leads through AI conversation, and flags hot deals on a dashboard. It never made it past the prototype. A discovery call with an active wholesaling firm showed I was solving a problem they didn't have, so I shelved it. The takeaway: validate demand with real customers before committing to a build.",
       tags: ["Claude API", "Twilio", "Railway"],
       status: "Failed prototype",
       note: "No. 00 · The pilot issue · Built as an MVP in spring 2026",
