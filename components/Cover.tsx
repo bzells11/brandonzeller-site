@@ -78,7 +78,6 @@ function CoverPage() {
 
             <a
               href={`#${contents.feature.id}`}
-              data-turn data-page={contents.feature.page} data-title={contents.feature.title}
               className="absolute bottom-[21cqw] left-[4cqw] max-w-[44cqw] bg-paper p-[2.5cqw] transition-transform duration-500 ease-easy hover:-translate-y-1"
             >
               <span className="block font-display text-[6.5cqw] leading-none font-bold italic">
@@ -92,7 +91,6 @@ function CoverPage() {
 
             <a
               href={`#${contents.work.id}`}
-              data-turn data-page={contents.work.page} data-title={contents.work.title}
               className="absolute bottom-[4cqw] left-[4cqw] max-w-[54cqw] bg-ink p-[2.5cqw] text-paper transition-transform duration-500 ease-easy hover:-translate-y-1"
             >
               <span className="block font-sans text-[3.1cqw] leading-snug font-bold uppercase tracking-wide">
@@ -212,7 +210,6 @@ function ContentsPage() {
             >
               <a
                 href={`#${e.id}`}
-                data-turn data-page={e.page} data-title={e.title}
                 className="group grid grid-cols-[3rem_1fr_auto] items-baseline gap-3 py-3.5 sm:grid-cols-[3.5rem_9rem_1fr_auto]"
               >
                 <span className="font-display text-2xl font-bold tabular-nums">

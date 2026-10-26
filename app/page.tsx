@@ -1,6 +1,6 @@
 import { Cover } from "@/components/Cover";
 import { Nav } from "@/components/Nav";
-import { PageTurn } from "@/components/PageTurn";
+import { ReloadToTop } from "@/components/ReloadToTop";
 import { BackCover, BackPage, Feature, Intro, Masthead, Work } from "@/components/Sections";
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
         <BackPage />
       </main>
       <BackCover />
-      <PageTurn />
+      <ReloadToTop />
     </div>
   );
 }
