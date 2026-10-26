@@ -154,7 +154,7 @@ export const site = {
       // Paste a Spotify or SoundCloud *embed* URL here to show a player, e.g.
       // "https://open.spotify.com/embed/track/XXXXXXXX" or
       // "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/you/track"
-      embedUrl: "",
+      embedUrl: "https://open.spotify.com/embed/track/40gvh6jP5qxMJuMmF9lG9A",
     },
     fitness: {
       title: "Fitness",
