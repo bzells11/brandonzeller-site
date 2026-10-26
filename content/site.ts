@@ -55,6 +55,13 @@ export const site = {
   // The site is laid out like a magazine issue. Bump these whenever you like.
   issue: { number: "01", season: "Fall 2026" },
 
+  // Shelf of issues on the back page. When you ship your next big project,
+  // add it here as a new issue (and move "current" to it).
+  issues: [
+    { number: "01", season: "Fall 2026", headline: "The founder issue", lead: "WaitLess", current: true, image: "/headshot-480.webp" },
+    { number: "02", season: "Coming soon", headline: "The next issue", lead: "Next project", current: false, image: "" },
+  ],
+
   about: [
     "I grew up in Syosset, Long Island, and I'm studying Business Administration at Ohio State's Fisher College of Business.",
     "I taught myself to code as a kid by building a game in Unity with C#. Now I design and ship full products using AI tools like Claude Code.",

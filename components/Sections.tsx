@@ -189,17 +189,80 @@ export function BackPage() {
             </div>
           ))}
           {music.embedUrl && (
-            <iframe
-              src={music.embedUrl}
-              title="Music player"
-              loading="lazy"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              className="h-[152px] w-full sm:col-span-2"
-            />
+            <div className="reveal sm:col-span-2" style={delay(400)}>
+              <p className="flex items-center gap-2.5 font-sans text-kicker font-semibold uppercase">
+                <Vinyl />
+                Now playing
+              </p>
+              <iframe
+                src={music.embedUrl}
+                title="Now playing"
+                loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                className="mt-3 h-[152px] w-full rounded-xl"
+              />
+            </div>
           )}
         </div>
       </div>
+      <BackIssues />
     </Section>
+  );
+}
+
+// Small record that spins next to the "Now playing" label.
+function Vinyl() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className="anim-spin size-5" style={{ animationDuration: "3s" }}>
+      <circle cx="10" cy="10" r="9.5" fill="var(--color-ink)" />
+      <circle cx="10" cy="10" r="6.5" fill="none" stroke="var(--color-paper)" strokeOpacity="0.25" strokeWidth="0.6" />
+      <circle cx="10" cy="10" r="3.4" fill="var(--color-marker)" />
+      <circle cx="10" cy="10" r="0.9" fill="var(--color-ink)" />
+      <rect x="9.6" y="7" width="0.8" height="1.6" fill="var(--color-ink)" />
+    </svg>
+  );
+}
+
+// Mini covers for every issue. The current one is this site; future ones are placeholders.
+function BackIssues() {
+  return (
+    <div className="mt-16 sm:mt-20">
+      <p className="border-b-[3px] border-ink pb-2 font-sans text-kicker font-semibold uppercase">Back issues</p>
+      <ul className="mt-6 grid grid-cols-2 gap-4 sm:flex sm:gap-6">
+        {site.issues.map((iss, i) => (
+          <li
+            key={iss.number}
+            className={`reveal flex aspect-[3/4] flex-col p-3 sm:w-44 ${
+              iss.current ? "border border-ink bg-paper-2 shadow-[0_14px_30px_-18px_oklch(0.2_0.02_60/0.6)]" : "border border-dashed border-muted text-muted"
+            }`}
+            style={delay(i * 120)}
+          >
+            <div className="flex justify-between font-sans text-[0.625rem] font-semibold uppercase">
+              <span>No. {iss.number}</span>
+              <span>{iss.season}</span>
+            </div>
+            <p className="mt-1 text-center font-display text-[2.1rem] leading-none font-bold tracking-tight">ZELLER</p>
+            <p className="mt-1 border-y border-current py-0.5 text-center font-sans text-[0.5625rem] font-semibold tracking-[0.2em] uppercase">
+              {iss.headline}
+            </p>
+            <div className="relative my-2 flex-1 overflow-hidden">
+              {iss.image && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={iss.image} alt="" loading="lazy" className="absolute inset-0 size-full object-cover object-[50%_20%]" />
+              )}
+            </div>
+            <p className="font-display text-xl leading-tight font-bold italic">{iss.lead}</p>
+            <p className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
+              {iss.current ? (
+                <span className="rounded-[3px] bg-marker px-1 text-ink">You&rsquo;re reading it</span>
+              ) : (
+                "In production"
+              )}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

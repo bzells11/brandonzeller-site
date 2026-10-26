@@ -18,7 +18,7 @@ export function Nav() {
           <ul className="flex items-center gap-4 md:gap-5">
             {links.map((l) => (
               <li key={l.id} className="hidden md:block">
-                <a href={`#${l.id}`} className="underline-swipe inline-block">
+                <a href={`#${l.id}`} data-turn data-page={l.page} data-title={l.title} className="underline-swipe inline-block">
                   {l.label}
                 </a>
               </li>

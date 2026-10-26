@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Bodoni_Moda, Newsreader } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { EditorsDesk } from "@/components/EditorsDesk";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -59,6 +61,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-dvh">
         {children}
+        <EditorsDesk />
+        <Analytics />
       </body>
     </html>
   );

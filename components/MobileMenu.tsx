@@ -59,6 +59,7 @@ export function MobileMenu() {
             <li key={e.id} className="anim-rise border-b border-rule" style={{ animationDelay: `${i * 50}ms` }}>
               <a
                 href={`#${e.id}`}
+                data-turn data-page={e.page} data-title={e.title}
                 onClick={() => setOpen(false)}
                 className="grid grid-cols-[3.25rem_1fr] items-baseline gap-2 py-4 active:bg-marker"
               >

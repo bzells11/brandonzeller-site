@@ -15,7 +15,7 @@ const download = { href: site.resumePath, download: "Brandon_Zeller_Resume.pdf" 
 
 export default function ResumePage() {
   return (
-    <div className="min-h-dvh">
+    <div className="resume-print min-h-dvh">
       <header className="sticky top-0 z-50 border-b border-ink bg-paper print:hidden">
         <Container className="flex h-14 items-center justify-between gap-4">
           <Link href="/" className="group inline-flex items-center gap-2 font-sans text-sm font-semibold">
@@ -32,7 +32,7 @@ export default function ResumePage() {
       </header>
 
       <main>
-        <Container className="py-12 sm:py-16">
+        <Container className="py-12 sm:py-16 print:max-w-none print:px-0 print:py-0">
           {/* Title block */}
           <div className="flex items-baseline justify-between border-t-[3px] border-ink pt-2 font-sans text-kicker font-semibold uppercase">
             <span>
@@ -41,10 +41,10 @@ export default function ResumePage() {
             <span className="text-muted">Updated {resume.updated}</span>
           </div>
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:items-end">
+          <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:items-end print:mt-4 print:block">
             <div className="anim-rise lg:col-span-8">
-              <h1 className="text-mega font-bold">{site.name}</h1>
-              <p className="mt-5 text-deck italic">
+              <h1 className="text-mega font-bold print:text-[5rem]">{site.name}</h1>
+              <p className="mt-5 text-deck italic print:mt-2 print:text-[2rem]">
                 Business Administration at Ohio State&rsquo;s Fisher College of Business, Class of 2030.
               </p>
             </div>
@@ -64,7 +64,7 @@ export default function ResumePage() {
             </div>
           </div>
 
-          <p className="mt-8 flex flex-wrap gap-x-6 gap-y-1 border-y border-ink py-3 font-sans text-sm font-medium">
+          <p className="mt-8 print:mt-4 flex flex-wrap gap-x-6 gap-y-1 border-y border-ink py-3 font-sans text-sm font-medium">
             <a href={`mailto:${site.email}`} className="marker">
               {site.email}
             </a>
@@ -94,9 +94,9 @@ export default function ResumePage() {
           <Block title="Additional">
             <dl className="divide-y divide-rule">
               {resume.additional.map((a) => (
-                <div key={a.label} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
+                <div key={a.label} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6 print:py-1.5">
                   <dt className="font-sans text-kicker font-semibold uppercase text-muted sm:pt-1.5">{a.label}</dt>
-                  <dd className="text-lg">{a.value}</dd>
+                  <dd className="text-lg print:text-[1.45rem]">{a.value}</dd>
                 </div>
               ))}
             </dl>
@@ -129,31 +129,31 @@ export default function ResumePage() {
 
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="mt-16 grid gap-4 lg:mt-20 lg:grid-cols-12 lg:gap-12">
-      <h2 className="sticky top-[57px] z-10 -mx-4 border-b border-ink bg-paper px-4 py-2.5 font-display text-3xl leading-tight italic sm:-mx-8 sm:px-8 lg:top-20 lg:col-span-3 lg:mx-0 lg:self-start lg:border-t-[3px] lg:border-b-0 lg:bg-transparent lg:px-0 lg:py-0 lg:pt-5 lg:pr-4 lg:text-[2.5rem]">
+    <section className="mt-16 grid gap-4 lg:mt-20 lg:grid-cols-12 lg:gap-12 print:mt-4 print:grid-cols-[14rem_1fr] print:gap-5">
+      <h2 className="sticky top-[57px] z-10 -mx-4 border-b border-ink bg-paper px-4 py-2.5 font-display text-3xl leading-tight italic sm:-mx-8 sm:px-8 lg:top-20 lg:col-span-3 lg:mx-0 lg:self-start lg:border-t-[3px] lg:border-b-0 lg:bg-transparent lg:px-0 lg:py-0 lg:pt-5 lg:pr-4 lg:text-[2.5rem] print:mx-0 print:border-0 print:bg-transparent print:px-0 print:py-0 print:pt-1.5 print:text-[2.3rem]">
         {title}
       </h2>
-      <InView className="reveal border-t-[3px] border-ink lg:col-span-9">{children}</InView>
+      <InView className="reveal border-t-[3px] border-ink lg:col-span-9 print:border-t-2">{children}</InView>
     </section>
   );
 }
 
 function Entry({ entry: e }: { entry: ResumeEntry }) {
   return (
-    <article className="border-b border-rule py-6">
+    <article className="border-b border-rule py-6 print:py-1.5">
       <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-        <h3 className="font-display text-2xl leading-tight font-semibold">{e.org}</h3>
+        <h3 className="font-display text-2xl leading-tight font-semibold print:text-[1.75rem]">{e.org}</h3>
         <p className="shrink-0 font-sans text-kicker font-semibold uppercase text-muted">{e.dates}</p>
       </div>
-      <p className="mt-1 flex flex-wrap items-baseline gap-x-2 text-lg">
+      <p className="mt-1 flex flex-wrap items-baseline gap-x-2 text-lg print:mt-0 print:text-[1.45rem]">
         <span className="italic">{e.title}</span>
         <span className="font-sans text-sm text-muted">· {e.location}</span>
       </p>
       {e.bullets.length > 0 && (
-        <ul className="mt-3 space-y-2">
+        <ul className="mt-3 space-y-2 print:mt-1.5 print:space-y-0.5">
           {e.bullets.map((b) => (
-            <li key={b} className="relative pl-6 text-lg leading-relaxed">
-              <span aria-hidden="true" className="absolute top-[0.7em] left-0 h-[3px] w-3 bg-ink" />
+            <li key={b} className="relative pl-6 text-lg leading-relaxed print:text-[1.45rem] print:leading-snug">
+              <span aria-hidden="true" className="absolute top-[0.7em] left-0 h-[3px] w-3 bg-ink print:h-[2px]" />
               {b}
             </li>
           ))}

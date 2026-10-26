@@ -1,5 +1,6 @@
 import { Cover } from "@/components/Cover";
 import { Nav } from "@/components/Nav";
+import { PageTurn } from "@/components/PageTurn";
 import { BackCover, BackPage, Feature, Intro, Masthead, Work } from "@/components/Sections";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
         <BackPage />
       </main>
       <BackCover />
+      <PageTurn />
     </div>
   );
 }

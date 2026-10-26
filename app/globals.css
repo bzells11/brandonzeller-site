@@ -226,6 +226,17 @@
   }
 }
 
+@keyframes desk-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) rotate(-2deg) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -278,6 +289,9 @@
   .anim-slap {
     animation: slap 0.7s var(--ease-easy) 1s both;
   }
+  .anim-desk {
+    animation: desk-in 0.5s var(--ease-easy) both;
+  }
   .anim-spin {
     animation: spin 24s linear infinite;
     will-change: transform;
@@ -328,5 +342,44 @@
       animation: grow-x linear both;
       animation-timeline: scroll(root);
     }
+  }
+}
+
+/* ───────────────────────── Print ─────────────────────────
+   Printing the resume page gives a compact, one-page sheet. */
+@media print {
+  @page {
+    size: letter;
+    margin: 0.4in 0.5in;
+  }
+
+  html:has(.resume-print) {
+    font-size: 7.1px;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .resume-print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Anything waiting to animate in should simply be on the page. */
+  .js .reveal,
+  .js .mask > span,
+  .js .draw-rule,
+  .js .bar {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .resume-print h2 {
+    position: static;
+  }
+
+  .resume-print article {
+    break-inside: avoid;
   }
 }
