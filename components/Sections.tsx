@@ -3,7 +3,8 @@ import { site, type Project } from "@/content/site";
 import { contents } from "./contents";
 import { WaitChart } from "./WaitChart";
 import { InView } from "./InView";
-import { ArrowDown, ArrowUpRight, Barcode, Container, Kicker, MaskTitle, Section, buttonStyles, delay, readTime } from "./ui";
+import { IssuePopup } from "./IssuePopup";
+import { ArrowUpRight, Barcode, Container, Kicker, MaskTitle, Section, buttonStyles, delay, readTime } from "./ui";
 
 export function Intro() {
   const c = contents.intro;
@@ -49,64 +50,6 @@ export function Feature() {
           <FeatureStory key={p.id} project={p} />
         ))}
     </Section>
-  );
-}
-
-// Earlier projects, written up under the shelf next to their own covers.
-function FromTheArchive({ projects }: { projects: Project[] }) {
-  if (projects.length === 0) return null;
-  return (
-    <div className="mt-16 sm:mt-20">
-      <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
-        <Kicker>From the archive</Kicker>
-        <Kicker className="text-muted">Earlier issues</Kicker>
-      </div>
-      <ul>
-        {projects.map((p) => (
-          <InView
-            as="li"
-            key={p.id}
-            id={p.id}
-            className="reveal scroll-mt-24 grid gap-6 border-b border-rule py-8 sm:grid-cols-[11rem_1fr] sm:gap-8 lg:grid-cols-[13rem_1fr_auto] lg:items-center lg:gap-12"
-          >
-            {p.logo && (
-              <div className="flex aspect-[16/10] w-full max-w-[13rem] items-center justify-center rounded-[5px] bg-[oklch(0.93_0.025_82)] p-5 ring-1 ring-rule">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={p.logo}
-                  alt={`${p.name} logo`}
-                  loading="lazy"
-                  className="max-h-full w-full object-contain mix-blend-multiply contrast-[0.9] saturate-[0.45] sepia-[0.3]"
-                />
-              </div>
-            )}
-            <div>
-              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h4 className="font-display text-4xl leading-none font-bold">{p.name}</h4>
-                <Kicker>
-                  <span className="rounded-[4px] border border-ink px-1.5 py-0.5">{p.status}</span>
-                </Kicker>
-              </div>
-              {p.note && <p className="mt-2 font-sans text-sm font-medium text-muted">{p.note}</p>}
-              <p className="mt-3 max-w-2xl text-body">{p.description}</p>
-              {p.tags.length > 0 && (
-                <p className="mt-3 font-sans text-sm font-medium text-muted">Built with {p.tags.join(" · ")}</p>
-              )}
-            </div>
-            {p.href && (
-              <a
-                href={p.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${buttonStyles.primary} justify-self-start sm:col-start-2 lg:col-start-auto lg:justify-self-end`}
-              >
-                Try the demo <ArrowUpRight />
-              </a>
-            )}
-          </InView>
-        ))}
-      </ul>
-    </div>
   );
 }
 
@@ -279,7 +222,6 @@ export function BackPage() {
         </div>
       </div>
       <BackIssues />
-      <FromTheArchive projects={site.projects.filter((p) => p.size !== "feature")} />
     </Section>
   );
 }
@@ -335,6 +277,9 @@ function Vinyl() {
   );
 }
 
+// The write-up behind a back-issue cover's "Learn more" popup.
+const archived = (id: string) => site.projects.find((p) => p.id === id);
+
 // Mini covers for every issue. The current one is this site; future ones are placeholders.
 function BackIssues() {
   return (
@@ -380,26 +325,19 @@ function BackIssues() {
               )}
             </div>
             <p className="font-display text-xl leading-tight font-bold italic">{iss.lead}</p>
-            <p className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
+            <div className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
               {iss.current ? (
                 <span className="rounded-[3px] bg-marker px-1 text-on-marker">You&rsquo;re reading it</span>
-              ) : iss.archive || iss.href ? (
-                <span className="flex flex-col items-start gap-1">
-                  {iss.archive && (
-                    <a href={`#${iss.archive}`} className="marker inline-flex items-center gap-0.5">
-                      Learn more <ArrowDown className="size-3" />
-                    </a>
-                  )}
-                  {iss.href && (
-                    <a href={iss.href} target="_blank" rel="noopener noreferrer" className="marker inline-flex items-center gap-0.5">
-                      Try the demo <ArrowUpRight className="size-3" />
-                    </a>
-                  )}
-                </span>
+              ) : archived(iss.archive) ? (
+                <IssuePopup project={archived(iss.archive)!} />
+              ) : iss.href ? (
+                <a href={iss.href} target="_blank" rel="noopener noreferrer" className="marker inline-flex items-center gap-0.5">
+                  Try the demo <ArrowUpRight className="size-3" />
+                </a>
               ) : (
                 "In production"
               )}
-            </p>
+            </div>
           </li>
         ))}
         <li className="reveal col-span-2 flex flex-col justify-between rounded-lg border border-ink p-5 sm:ml-auto sm:max-w-xs" style={delay(240)}>

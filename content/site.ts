@@ -63,7 +63,7 @@ export const site = {
 
   // "Every issue" shelf on the back page: past, current, and upcoming. Each issue is one project, and its cover shows that
   // project's icon and wordmark (put the files in /public/issues; either one is optional). When you ship your next big project,
-  // add it here as a new issue (and move "current" to it). "archive" is the id of its write-up under "From the archive".
+  // add it here as a new issue (and move "current" to it). "archive" is the id of the project whose write-up opens from its "Learn more" popup.
   issues: [
     { number: "00", season: "Spring 2026", headline: "The pilot issue", lead: "REW AI", current: false, icon: "", logo: "/issues/rewai.webp", href: "https://rewai-demo.vercel.app", archive: "rew-ai" },
     { number: "01", season: "Fall 2026", headline: "The founder issue", lead: "WaitLess", current: true, icon: "/issues/waitless-icon.webp", logo: "/issues/waitless-wordmark.webp", href: "", archive: "" },
@@ -104,7 +104,7 @@ export const site = {
       id: "rew-ai",
       name: "REW AI",
       description:
-        "AI acquisitions agent for real estate wholesalers: texts motivated sellers, qualifies leads through AI conversation, and flags hot deals on a dashboard. It never made it past the prototype. A discovery call with a working real estate agent showed I was solving a problem they didn't have, so I shelved it. The takeaway: validate demand with real customers before committing to a build.",
+        "AI acquisitions agent for real estate wholesalers: texts motivated sellers, qualifies leads through AI conversation, and flags hot deals on a dashboard. It never made it past the prototype. A discovery call with a working real estate agent showed I was solving a problem they didn't have, so I shelved it. Big lesson for me: talk to the people you're building for before you build anything.",
       tags: ["Claude API", "Twilio", "Railway"],
       status: "Failed prototype",
       note: "No. 00 · The pilot issue · Built as an MVP in spring 2026",
