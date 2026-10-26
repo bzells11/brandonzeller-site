@@ -7,8 +7,8 @@ import { useEffect, useRef, useState } from "react";
 // is used instead when the visitor prefers reduced motion.
 //
 // The page is a real two-sided sheet hinged on an edge, so it flips in 3D rather than sliding:
-// it swings over from the right on its right-hand hinge, then lifts off its left-hand hinge and
-// turns away to the left, like a magazine page. It darkens as it bends and casts a shadow on the
+// it swings over from the right on its right-hand hinge, then tips back off its left-hand hinge,
+// away from the reader, and turns off to the left. It darkens as it bends and casts a shadow on the
 // page underneath.
 export function PageTurn() {
   const sheet = useRef<HTMLDivElement>(null);
@@ -39,7 +39,7 @@ export function PageTurn() {
       const shadow = (side: "left" | "right") =>
         `linear-gradient(to ${side}, oklch(0.2 0.02 60 / 0.55), oklch(0.2 0.02 60 / 0.12) 35%, transparent 70%)`;
 
-      // Turn in: hinged on the right edge, the sheet swings over from off-screen right and lands flat.
+      // Turn in: hinged on the right edge, the sheet swings up from behind the screen and lands flat.
       stage.hidden = false;
       el.style.transformOrigin = "right center";
       shade.style.backgroundImage = shadow("left");
@@ -47,7 +47,7 @@ export function PageTurn() {
       shade.animate([{ opacity: 0.7 }, { opacity: 0 }], { duration: 750, easing: ease, fill: "forwards" });
       el.animate(
         [
-          { transform: "rotateY(180deg)" },
+          { transform: "rotateY(-180deg)" },
           { transform: "rotateY(0deg)" },
         ],
         { duration: 750, easing: ease, fill: "forwards" },
@@ -59,7 +59,7 @@ export function PageTurn() {
         root.style.scrollBehavior = prev;
         history.pushState(null, "", `#${id}`);
 
-        // Turn away: hinged on the left edge, the free edge lifts toward you and the sheet flips off to the left.
+        // Turn away: hinged on the left edge, the free edge tips back away from you and the sheet flips off to the left.
         el.style.transformOrigin = "left center";
         shade.style.backgroundImage = shadow("right");
         const out = { duration: 900, delay: 180, easing: ease, fill: "forwards" } as const;
@@ -68,7 +68,7 @@ export function PageTurn() {
         return el.animate(
           [
             { transform: "rotateY(0deg)" },
-            { transform: "rotateY(-180deg)" },
+            { transform: "rotateY(180deg)" },
           ],
           out,
         ).finished;
