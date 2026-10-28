@@ -73,7 +73,6 @@ export const resume = {
       bullets: [
         "Supervised and mentored a group of children ages 6–9, creating a safe and engaging environment.",
         "Provided dedicated one-on-one support for a camper with special needs, ensuring inclusion and safety.",
-        "Coordinated vehicle traffic at the camp entrance during arrival and dismissal periods.",
       ],
     },
     {
@@ -89,6 +88,13 @@ export const resume = {
   ] satisfies ResumeEntry[],
 
   activities: [
+    {
+      org: "Builders",
+      title: "Member",
+      location: "Columbus, OH",
+      dates: "October 2026 – Present",
+      bullets: ["Ohio State's student-run startup nonprofit for students launching companies and side projects."],
+    },
     {
       org: "BuckeyeThon",
       title: "Member",
@@ -112,9 +118,9 @@ export const resume = {
     },
     {
       org: "Syosset High School Entrepreneurship Club",
-      title: "Treasurer (2025–2026); Member",
+      title: "Treasurer",
       location: "Syosset, NY",
-      dates: "September 2022 – June 2026",
+      dates: "September 2024 – June 2026",
       bullets: ["Managed club finances and supported event planning for member programming."],
     },
   ] satisfies ResumeEntry[],
@@ -123,6 +129,6 @@ export const resume = {
     { label: "Certifications", value: "Claude Code 101 (Anthropic), Business Management (YouScience)" },
     { label: "Technical", value: "Claude Code, IT support, Chromebook repair, A/V and livestream production, marketing tools" },
     { label: "Skills", value: "Communication, leadership, public speaking, problem solving, time management, financial analysis" },
-    { label: "Interests", value: "Investing & finance, entrepreneurship, music production, debate, visual design & digital media" },
+    { label: "Interests", value: "Investing, private equity & venture capital, entrepreneurship, music production, visual design" },
   ],
 };
