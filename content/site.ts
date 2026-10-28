@@ -157,7 +157,7 @@ export const site = {
 
   involvement: [
     { org: "Builders", logo: "/logos/builders.png", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
-    { org: "BuckeyeThon", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
+    { org: "BuckeyeThon", logo: "/logos/buckeyethon.png", logoHeight: "h-9", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
     { org: "Artificial Intelligence Club", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
     { org: "Jewish Buckeyes in Business", detail: "Ohio State", role: "Member", dates: "2026 – Present" },
     { org: "Entrepreneurship Club", detail: "Syosset High School", role: "Treasurer (2025–26) · Member", dates: "2022 – 2026" },
