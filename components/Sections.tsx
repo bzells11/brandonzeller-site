@@ -164,6 +164,7 @@ export function Masthead() {
             items={site.involvement.map((i) => ({
               role: i.role,
               name: i.org,
+              logo: i.logo,
               note: [i.detail, i.dates].filter(Boolean).join(", "),
             }))}
           />
@@ -174,7 +175,7 @@ export function Masthead() {
   );
 }
 
-function Credits({ heading, items }: { heading: string; items: { role: string; name: string; note?: string }[] }) {
+function Credits({ heading, items }: { heading: string; items: { role: string; name: string; logo?: string; note?: string }[] }) {
   return (
     <div>
       <h4 className="border-y border-ink py-2 font-sans text-kicker font-semibold tracking-[0.2em] uppercase">{heading}</h4>
@@ -182,7 +183,11 @@ function Credits({ heading, items }: { heading: string; items: { role: string; n
         {items.map((it, i) => (
           <li key={it.name} className="reveal" style={delay(i * 90)}>
             <p className="font-sans text-kicker font-semibold tracking-[0.1em] uppercase text-muted">{it.role}</p>
-            <p className="mt-1.5 font-display text-2xl leading-tight font-semibold">{it.name}</p>
+            {it.logo ? (
+              <img src={it.logo} alt={it.name} loading="lazy" className="mx-auto mt-2.5 mb-1 h-7 w-auto" />
+            ) : (
+              <p className="mt-1.5 font-display text-2xl leading-tight font-semibold">{it.name}</p>
+            )}
             {it.note && <p className="mt-1 text-base text-muted">{it.note}</p>}
           </li>
         ))}
