@@ -392,7 +392,8 @@
     will-change: transform;
   }
 
-  .js .reveal {
+  /* Only the intro ("In Brandon's words") animates in; every other section is already on the page. */
+  .js #intro .reveal {
     opacity: 0;
     transform: translateY(22px);
     transition:
@@ -401,30 +402,30 @@
     transition-delay: var(--d, 0ms);
   }
 
-  .js .mask > span {
+  .js #intro .mask > span {
     transform: translateY(110%);
     transition: transform 1.05s var(--ease-out-expo);
     transition-delay: var(--d, 0ms);
   }
 
-  .js .draw-rule {
+  .js #intro .draw-rule {
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 1.2s var(--ease-out-expo);
   }
 
-  .js .bar {
+  .js #intro .bar {
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 1s var(--ease-out-expo);
     transition-delay: var(--d, 0ms);
   }
 
-  .js [data-shown] .reveal,
-  .js .reveal[data-shown],
-  .js [data-shown] .mask > span,
-  .js [data-shown] .draw-rule,
-  .js [data-shown] .bar {
+  .js #intro[data-shown] .reveal,
+  .js #intro .reveal[data-shown],
+  .js #intro[data-shown] .mask > span,
+  .js #intro[data-shown] .draw-rule,
+  .js #intro[data-shown] .bar {
     opacity: 1;
     transform: none;
   }
