@@ -124,7 +124,13 @@ export function Backstep() {
     <Section id={c.id} page={c.page} label={c.label} read={readTime(p.description, ...(p.story ?? []))} className="paper bg-paper-2">
       <Kicker className="reveal">
         Newest build <span className="mx-2 text-muted">/</span>
-        <span className="rounded-[4px] bg-live px-1.5 py-0.5 text-on-live">{p.status}</span>
+        <span className="inline-flex items-center gap-1.5 overflow-hidden rounded-[4px] bg-live py-0.5 pr-1.5 pl-2 text-on-live">
+          {/* On-air light: a steady dot with a slow ping around it. */}
+          <span aria-hidden="true" className="relative inline-block size-1.5 rounded-full bg-on-live">
+            <span className="animate-ping-slow absolute -inset-px rounded-full border border-on-live will-change-transform" />
+          </span>
+          {p.status}
+        </span>
       </Kicker>
       <MaskTitle className="mt-5 text-mega font-bold" delay={80}>{p.name}</MaskTitle>
       <p className="reveal mt-6 max-w-3xl font-serif text-deck italic" style={delay(220)}>{p.description}</p>

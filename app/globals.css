@@ -101,8 +101,7 @@
   }
 
   /* Text on the yellow highlighter stays dark. */
-  .bg-marker,
-  .active\:bg-marker:active {
+  .bg-marker {
     color: var(--color-on-marker);
   }
 

@@ -60,7 +60,7 @@ export function MobileMenu() {
               <a
                 href={`#${e.id}`}
                 onClick={() => setOpen(false)}
-                className="grid grid-cols-[3.25rem_1fr] items-baseline gap-2 py-4 active:bg-marker"
+                className="grid grid-cols-[3.25rem_1fr] items-baseline gap-2 py-4"
               >
                 <span className="font-display text-3xl font-bold tabular-nums">{e.page}</span>
                 <span>
@@ -72,14 +72,14 @@ export function MobileMenu() {
           ))}
         </ol>
         <div className="mt-8 grid grid-cols-2 gap-3 font-sans text-sm font-semibold">
-          <a href={`mailto:${site.email}`} className="flex h-12 items-center justify-center rounded-md border border-ink active:bg-marker">
+          <a href={`mailto:${site.email}`} className="flex h-12 items-center justify-center rounded-md border border-ink">
             Email
           </a>
           <a
             href={site.links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-12 items-center justify-center rounded-md border border-ink active:bg-marker"
+            className="flex h-12 items-center justify-center rounded-md border border-ink"
           >
             LinkedIn
           </a>
