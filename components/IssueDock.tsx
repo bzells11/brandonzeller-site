@@ -10,6 +10,7 @@ import { useEffect } from "react";
 const SCALE = 0.36; // docked size, relative to the cover on the shelf
 const GAP = 14; // space between docked covers, px
 const BOTTOM = 22; // docked row's distance from the bottom of the screen, px
+const WAKE = 40; // how far you scroll before the dock shows up, px
 
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
@@ -56,6 +57,8 @@ export function IssueDock() {
         c.style.transform = e === 1 ? "" : `translate3d(${(dx * k).toFixed(1)}px, ${(dy * k).toFixed(1)}px, 0) scale(${(SCALE + (1 - SCALE) * e).toFixed(4)})`;
         c.style.setProperty("--dock", k.toFixed(3));
         c.toggleAttribute("data-docked", e < 1);
+        // Stay out of the way on first load; the dock rises in once you start scrolling.
+        c.toggleAttribute("data-dock-waiting", y < WAKE);
       });
     };
 
@@ -86,6 +89,7 @@ export function IssueDock() {
         c.style.transform = "";
         c.style.removeProperty("--dock");
         c.removeAttribute("data-docked");
+        c.removeAttribute("data-dock-waiting");
       });
     };
     const sync = () => (wide.matches ? start() : stop());

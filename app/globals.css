@@ -124,6 +124,25 @@
 }
 .dock-bob {
   animation: dock-bob 4.2s ease-in-out infinite;
+  transition:
+    opacity 0.45s ease,
+    translate 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+    scale 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* While floating they don't tilt toward the cursor; hovering one just lifts it a little. */
+[data-docked] .cover-tilt {
+  transform: none;
+}
+@media (hover: hover) {
+  [data-docked] .dock-bob:hover {
+    scale: 1.06;
+  }
+}
+/* Before you scroll, the docked covers wait just below their spot, hidden and not clickable. */
+[data-docked][data-dock-waiting] .dock-bob {
+  opacity: 0;
+  translate: 0 60px;
+  pointer-events: none;
 }
 [data-docked] .dock-bob > * {
   filter: drop-shadow(0 calc(var(--dock, 0) * 26px) calc(var(--dock, 0) * 22px) oklch(0.2 0.02 60 / calc(var(--dock, 0) * 0.35)));
