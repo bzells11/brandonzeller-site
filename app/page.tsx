@@ -16,8 +16,8 @@ export default function Home() {
       <Cover />
       <main id="main">
         <Intro />
-        <Feature />
         <Backstep />
+        <Feature />
         <Work />
         <Masthead />
         <BackPage />

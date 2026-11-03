@@ -44,7 +44,6 @@ export function Feature() {
       page={c.page}
       label={c.label}
       read={readTime(...site.projects.filter((p) => p.size === "feature").flatMap((p) => [p.description, ...(p.story ?? [])]))}
-      className="paper bg-paper-2"
     >
       {site.projects
         .filter((p) => p.size === "feature")
@@ -116,15 +115,16 @@ function FeatureStory({ project: p }: { project: Project }) {
   );
 }
 
-// Backstep: the second build, out now. Same layout as the feature, with an install-and-undo figure instead of a chart.
+// Backstep: the newest build and the one that's live, so it leads the projects. Same layout as the feature,
+// with an install-and-undo figure instead of a chart.
 export function Backstep() {
   const c = contents.backstep;
   const p = site.projects.find((x) => x.id === c.id)!;
   return (
-    <Section id={c.id} page={c.page} label={c.label} read={readTime(p.description, ...(p.story ?? []))}>
+    <Section id={c.id} page={c.page} label={c.label} read={readTime(p.description, ...(p.story ?? []))} className="paper bg-paper-2">
       <Kicker className="reveal">
-        Also building <span className="mx-2 text-muted">/</span>
-        <span className="rounded-[4px] bg-marker px-1.5 py-0.5">{p.status}</span>
+        Newest build <span className="mx-2 text-muted">/</span>
+        <span className="rounded-[4px] bg-live px-1.5 py-0.5 text-on-live">{p.status}</span>
       </Kicker>
       <MaskTitle className="mt-5 text-mega font-bold" delay={80}>{p.name}</MaskTitle>
       <p className="reveal mt-6 max-w-3xl font-serif text-deck italic" style={delay(220)}>{p.description}</p>
@@ -355,10 +355,10 @@ function BackIssues() {
             key={iss.number}
             className="reveal flex sm:w-44"
             style={delay(i * 120)}
-            // Covers you can open float at the bottom of the screen until you reach the shelf (see IssueDock).
+            // Covers you can open sit at the bottom of the screen until you reach the shelf (see IssueDock).
             data-dock={clickable(iss) ? "" : undefined}
           >
-            <div className="dock-bob flex w-full" style={{ animationDelay: `${i * -1.3}s` }}>
+            <div className="flex w-full">
             <CoverFrame clickable={clickable(iss)}>
               <div
                 className={`relative flex w-full flex-col p-3 ${clickable(iss) ? "cover-tilt" : ""} ${

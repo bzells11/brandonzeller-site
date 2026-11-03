@@ -177,8 +177,8 @@ function Sticker({ label }: { label: string }) {
 function ContentsPage() {
   const entries = [
     contents.intro,
-    contents.feature,
     contents.backstep,
+    contents.feature,
     contents.work,
     contents.masthead,
     contents.back,

@@ -14,6 +14,9 @@
   --color-marker: oklch(0.91 0.18 103);
   /* Text that sits on the yellow highlighter. */
   --color-on-marker: oklch(0.2 0.012 60);
+  /* Red highlight for things that are live right now. */
+  --color-live: oklch(0.52 0.19 25);
+  --color-on-live: oklch(0.97 0.01 85);
   --color-cover: oklch(0.52 0.12 245);
 
   /* Type */
@@ -112,8 +115,8 @@
 
 
 /* ───────────────────────── Issue dock ─────────────────────────
-   The shelf covers that float at the bottom of the screen (components/IssueDock.tsx moves them).
-   --dock is 1 while docked and 0 on the shelf, so the bob and the lift shadow fade out as they land. */
+   The shelf covers that sit at the bottom of the screen until you reach the shelf (components/IssueDock.tsx).
+   While docked you see still copies in a fixed layer; the real covers only move for the flight onto the shelf. */
 [data-dock] {
   position: relative;
   transform-origin: 0 0;
@@ -122,44 +125,47 @@
 [data-dock][data-docked] {
   z-index: 40;
 }
-.dock-bob {
-  animation: dock-bob 4.2s ease-in-out infinite;
-  transition:
-    opacity 0.45s ease,
-    translate 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
-    scale 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+[data-dock][data-dock-hidden] {
+  visibility: hidden;
 }
-/* While floating they don't tilt toward the cursor; hovering one just lifts it a little. */
-[data-docked] .cover-tilt {
-  transform: none;
-}
-@media (hover: hover) {
-  [data-docked] .dock-bob:hover {
-    scale: 1.06;
-  }
-}
-/* Before you scroll, the docked covers wait just below their spot, hidden and not clickable. */
-[data-docked][data-dock-waiting] .dock-bob {
-  opacity: 0;
-  translate: 0 60px;
+.issue-dock {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
-[data-docked] .dock-bob > * {
-  filter: drop-shadow(0 calc(var(--dock, 0) * 26px) calc(var(--dock, 0) * 22px) oklch(0.2 0.02 60 / calc(var(--dock, 0) * 0.35)));
+.issue-dock[data-show] {
+  opacity: 1;
 }
-@keyframes dock-bob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(calc(var(--dock, 0) * -18px));
-  }
+.issue-dock-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transform-origin: 0 0;
+  filter: drop-shadow(0 18px 18px oklch(0.2 0.02 60 / 0.3));
+  transition: filter 0.25s ease;
 }
-@media (prefers-reduced-motion: reduce) {
-  .dock-bob {
-    animation: none;
-  }
+.issue-dock[data-show] .issue-dock-cover {
+  pointer-events: auto;
+}
+/* Hovering darkens the shadow a touch; nothing moves. */
+.issue-dock-cover:hover {
+  filter: drop-shadow(0 22px 22px oklch(0.2 0.02 60 / 0.45));
+}
+.issue-dock-cover:focus-visible {
+  outline: 6px solid var(--color-ink);
+  outline-offset: 8px;
+}
+.issue-dock-cover > * {
+  pointer-events: none;
 }
 
 /* ───────────────────────── Paper ─────────────────────────
