@@ -32,7 +32,8 @@ export function Cover() {
 }
 
 function CoverPage() {
-  const feature = site.projects[0];
+  // The cover line leads with the newest build.
+  const lead = site.projects.find((p) => p.id === contents.backstep.id)!;
   return (
     <div className="anim-cover mx-auto max-w-[31rem] [--tilt:0deg] lg:[--tilt:2.5deg]">
       <CoverTilt>
@@ -77,15 +78,15 @@ function CoverPage() {
             />
 
             <a
-              href={`#${contents.feature.id}`}
+              href={`#${contents.backstep.id}`}
               className="absolute bottom-[21cqw] left-[4cqw] max-w-[44cqw] bg-paper p-[2.5cqw] transition-transform duration-500 ease-easy hover:-translate-y-1"
             >
               <span className="block font-display text-[6.5cqw] leading-none font-bold italic">
-                {feature.name}
+                {lead.name}
               </span>
               <span className="mt-[1cqw] block font-sans text-[3.3cqw] leading-snug font-semibold">
-                The app that finds the shortest urgent-care wait.{" "}
-                <span className="tabular-nums">p.{contents.feature.page}</span>
+                {lead.description}{" "}
+                <span className="tabular-nums">p.{contents.backstep.page}</span>
               </span>
             </a>
 
@@ -101,7 +102,7 @@ function CoverPage() {
               </span>
             </a>
 
-            <Sticker label={feature.status} />
+            <Sticker ring="Backstep · Just launched" big="Out" small="Now" />
 
             <div className="absolute right-[4cqw] bottom-[4cqw] flex w-[27cqw] flex-col items-center bg-paper px-[2cqw] pt-[2cqw] pb-[1cqw]">
               <Barcode
@@ -119,9 +120,10 @@ function CoverPage() {
   );
 }
 
-// Round "sticker" slapped on the cover. The ring of text slowly turns.
-function Sticker({ label }: { label: string }) {
-  const ring = `${label} · ${site.projects[0].name} · `.toUpperCase();
+// Round "sticker" slapped on the cover. The ring of text slowly turns; keep it around 25 to 30 characters
+// so it wraps the circle once without a gap or overlap.
+function Sticker({ ring: text, big, small }: { ring: string; big: string; small: string }) {
+  const ring = `${text} · `.toUpperCase();
   return (
     <div
       aria-hidden="true"
@@ -155,7 +157,7 @@ function Sticker({ label }: { label: string }) {
           fontStyle="italic"
           fill="var(--color-on-marker)"
         >
-          New
+          {big}
         </text>
         <text
           x="50"
@@ -167,7 +169,7 @@ function Sticker({ label }: { label: string }) {
           letterSpacing="1"
           fill="var(--color-on-marker)"
         >
-          APP
+          {small.toUpperCase()}
         </text>
       </svg>
     </div>

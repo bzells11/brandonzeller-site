@@ -58,7 +58,7 @@ function FeatureStory({ project: p }: { project: Project }) {
   return (
     <article>
       <Kicker className="reveal">
-        Cover story <span className="mx-2 text-muted">/</span>
+        Now building <span className="mx-2 text-muted">/</span>
         <span className="rounded-[4px] bg-marker px-1.5 py-0.5">{p.status}</span>
       </Kicker>
       <MaskTitle className="mt-5 text-mega font-bold" delay={80}>{p.name}</MaskTitle>
