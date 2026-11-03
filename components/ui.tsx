@@ -69,7 +69,7 @@ export function MaskTitle({
   children: ReactNode;
 }) {
   return (
-    <Tag className={`mask drift-x ${className}`}>
+    <Tag className={`mask ${className}`}>
       <span style={{ "--d": `${delay}ms` } as CSSProperties}>{children}</span>
     </Tag>
   );

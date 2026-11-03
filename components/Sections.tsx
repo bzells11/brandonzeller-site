@@ -91,7 +91,7 @@ function FeatureStory({ project: p }: { project: Project }) {
         </div>
 
         <div className="lg:col-span-5 lg:col-start-8">
-          <InView as="figure" className="drift-y border border-ink bg-paper p-5 sm:p-6">
+          <InView as="figure" className="border border-ink bg-paper p-5 sm:p-6">
             <Kicker>Fig. 1 · Nearest urgent care, by wait</Kicker>
             <div className="mt-5">
               <WaitChart
@@ -143,7 +143,7 @@ export function Backstep() {
           )}
         </div>
 
-        <figure className="drift-y self-start border border-ink bg-paper p-5 sm:p-6 lg:col-span-5 lg:col-start-8">
+        <figure className="self-start border border-ink bg-paper p-5 sm:p-6 lg:col-span-5 lg:col-start-8">
           <div className="flex items-start justify-between gap-4">
             <Kicker>Fig. 2 · Install it, then undo anything</Kicker>
             {/* eslint-disable-next-line @next/next/no-img-element */}
