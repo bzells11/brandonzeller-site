@@ -111,16 +111,49 @@
 }
 
 
+/* ───────────────────────── Issue dock ─────────────────────────
+   The shelf covers that float at the bottom of the screen (components/IssueDock.tsx moves them).
+   --dock is 1 while docked and 0 on the shelf, so the bob and the lift shadow fade out as they land. */
+[data-dock] {
+  position: relative;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+[data-dock][data-docked] {
+  z-index: 40;
+}
+.dock-bob {
+  animation: dock-bob 4.2s ease-in-out infinite;
+}
+[data-docked] .dock-bob > * {
+  filter: drop-shadow(0 calc(var(--dock, 0) * 26px) calc(var(--dock, 0) * 22px) oklch(0.2 0.02 60 / calc(var(--dock, 0) * 0.35)));
+}
+@keyframes dock-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(var(--dock, 0) * -18px));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dock-bob {
+    animation: none;
+  }
+}
+
 /* ───────────────────────── Paper ─────────────────────────
-   Fine grain, short fibers and soft mottling on the paper itself: the page background and the
-   large paper panels that use the `paper` utility. It is a background, so photos, logos, charts
-   and text drawn on top stay clean. The tiles in /public/paper are pre-rendered (no live filters). */
+   Tooth (tiny bumps lit from the top left, with the highlights and shadows baked into one transparent
+   tile), short fibers and big soft clouds of uneven tone, on the paper itself: the page background and
+   the large paper panels that use the `paper` utility. It is a background, so photos, logos, charts and
+   text drawn on top stay clean. The tiles in /public/paper are pre-rendered (no live filters or blend modes). */
 @utility paper {
-  background-image: url("/paper/grain.webp"), url("/paper/fibers.webp"), url("/paper/mottle.webp");
+  background-image: url("/paper/tooth.webp"), url("/paper/fibers.webp"), url("/paper/mottle.webp");
   background-size:
-    240px 240px,
-    480px 480px,
-    1200px 1200px;
+    256px 256px,
+    600px 600px,
+    900px 900px;
 }
 
 body {

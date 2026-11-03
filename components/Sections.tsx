@@ -4,6 +4,7 @@ import { contents } from "./contents";
 import { WaitChart } from "./WaitChart";
 import { InView } from "./InView";
 import { IssuePopup } from "./IssuePopup";
+import { IssueDock } from "./IssueDock";
 import { CoverTilt } from "./CoverTilt";
 import { ArrowUpRight, Barcode, Container, Kicker, MaskTitle, Section, buttonStyles, delay, readTime } from "./ui";
 
@@ -350,7 +351,14 @@ function BackIssues() {
       <p className="border-b-[3px] border-ink pb-2 font-sans text-kicker font-semibold uppercase">Every issue</p>
       <ul className="mt-6 grid grid-cols-2 gap-4 sm:flex sm:items-stretch sm:gap-6">
         {site.issues.map((iss, i) => (
-          <li key={iss.number} className="reveal flex sm:w-44" style={delay(i * 120)}>
+          <li
+            key={iss.number}
+            className="reveal flex sm:w-44"
+            style={delay(i * 120)}
+            // Covers you can open float at the bottom of the screen until you reach the shelf (see IssueDock).
+            data-dock={clickable(iss) ? "" : undefined}
+          >
+            <div className="dock-bob flex w-full" style={{ animationDelay: `${i * -1.3}s` }}>
             <CoverFrame clickable={clickable(iss)}>
               <div
                 className={`relative flex w-full flex-col p-3 ${clickable(iss) ? "cover-tilt" : ""} ${
@@ -405,6 +413,7 @@ function BackIssues() {
               </div>
               </div>
             </CoverFrame>
+            </div>
           </li>
         ))}
         <li className="reveal col-span-2 flex flex-col justify-between rounded-lg border border-ink p-5 sm:ml-auto sm:max-w-xs" style={delay(240)}>
@@ -421,6 +430,7 @@ function BackIssues() {
           </a>
         </li>
       </ul>
+      <IssueDock />
     </div>
   );
 }
