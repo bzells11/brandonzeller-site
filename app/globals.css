@@ -114,6 +114,48 @@
 }
 
 
+/* ───────────────────────── Drift ─────────────────────────
+   A little life while you scroll, and nothing ever hides: headlines slide a few pixels sideways and
+   figures float a touch slower than the page as they pass through the screen. Tied to scroll position
+   by the browser itself (no script), using the separate `translate` property so it never fights a
+   transform. Browsers without scroll timelines, and reduced motion, just get the still page. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .drift-x,
+    .drift-y {
+      animation: linear both;
+      animation-timeline: view();
+    }
+    .drift-x {
+      animation-name: drift-x;
+    }
+    .drift-y {
+      animation-name: drift-y;
+    }
+  }
+}
+/* Headlines drifting near the edge must never make the page scroll sideways. */
+html,
+body {
+  overflow-x: clip;
+}
+@keyframes drift-x {
+  from {
+    translate: -18px 0;
+  }
+  to {
+    translate: 18px 0;
+  }
+}
+@keyframes drift-y {
+  from {
+    translate: 0 34px;
+  }
+  to {
+    translate: 0 -34px;
+  }
+}
+
 /* ───────────────────────── Issue dock ─────────────────────────
    The shelf covers that sit at the bottom of the screen until you reach the shelf (components/IssueDock.tsx).
    While docked you see still copies in a fixed layer; the real covers only move for the flight onto the shelf. */
