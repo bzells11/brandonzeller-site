@@ -20,6 +20,8 @@ export type Project = {
   image?: string;
   // Optional logo in /public/issues, shown on smaller project cards.
   logo?: string;
+  // Optional label for the link button (defaults to "Try the demo").
+  linkLabel?: string;
   // Optional one-line timeline note, e.g. "Built as an MVP in spring 2026".
   note?: string;
   // "feature" = the cover story. Use it for one project only.
@@ -67,7 +69,7 @@ export const site = {
   issues: [
     { number: "00", season: "Spring 2026", headline: "The pilot issue", lead: "REW AI", current: false, icon: "", logo: "/issues/rewai.webp", href: "https://rewai-demo.vercel.app", archive: "rew-ai" },
     { number: "01", season: "Fall 2026", headline: "The founder issue", lead: "WaitLess", current: true, icon: "/issues/waitless-icon.webp", logo: "/issues/waitless-wordmark.webp", href: "", archive: "" },
-    { number: "02", season: "Coming soon", headline: "The next issue", lead: "Next project", current: false, icon: "", logo: "", href: "", archive: "" },
+    { number: "02", season: "Nov 2026", headline: "The undo issue", lead: "Backstep", current: false, icon: "/issues/backstep.webp", logo: "", href: "https://getbackstep.com", archive: "backstep" },
   ],
 
   about: [
@@ -110,6 +112,19 @@ export const site = {
       note: "No. 00 · The pilot issue · Built as an MVP in spring 2026",
       href: "https://rewai-demo.vercel.app",
       logo: "/issues/rewai.webp",
+      size: "standard",
+    },
+    {
+      id: "backstep",
+      name: "Backstep",
+      description:
+        "Undo for everything your AI touches. Backstep saves a copy of your files and data before an AI coding tool like Claude Code or Cursor changes them. If something goes wrong, press Ctrl+U and everything goes back to how it was, including project files and database tables in Supabase, Firebase, or Postgres.",
+      tags: [],
+      status: "Live",
+      note: "No. 02 · The undo issue · Out now and still building",
+      href: "https://getbackstep.com",
+      linkLabel: "Visit Backstep",
+      logo: "/issues/backstep.webp",
       size: "standard",
     },
   ] as Project[],

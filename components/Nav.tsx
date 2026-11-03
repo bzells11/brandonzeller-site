@@ -8,7 +8,7 @@ const links = [contents.feature, contents.work, contents.masthead, contents.cont
 
 export function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-ink bg-paper">
+    <header className="paper sticky top-0 z-50 border-b border-ink bg-paper">
       <Container className="flex h-12 items-center justify-between gap-4">
         <a href="#top" aria-label="Back to top" className="flex items-baseline gap-2">
           <span className="font-display text-xl font-bold tracking-tight">ZELLER</span>

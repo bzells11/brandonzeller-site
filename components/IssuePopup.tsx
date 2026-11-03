@@ -5,7 +5,7 @@ import type { Project } from "@/content/site";
 import { ArrowUpRight, Kicker, buttonStyles } from "./ui";
 
 // "Learn more" on a back-issue cover: opens that project's write-up in a popup over the shelf.
-export function IssuePopup({ project: p }: { project: Project }) {
+export function IssuePopup({ project: p, kicker = "From the archive" }: { project: Project; kicker?: string }) {
   const ref = useRef<HTMLDialogElement>(null);
 
   return (
@@ -24,11 +24,11 @@ export function IssuePopup({ project: p }: { project: Project }) {
         aria-label={p.name}
         // Clicking the dimmed backdrop (the dialog element itself, outside the panel) closes it.
         onClick={(e) => e.target === e.currentTarget && ref.current?.close()}
-        className="m-auto w-[min(40rem,calc(100%-2rem))] max-h-[calc(100dvh-2rem)] border border-ink bg-paper p-0 text-left font-normal text-ink normal-case tracking-normal shadow-[0_30px_60px_-20px_oklch(0.2_0.02_60/0.6)] backdrop:bg-[oklch(0.2_0.012_60/0.55)]"
+        className="m-auto w-[min(40rem,calc(100%-2rem))] max-h-[calc(100dvh-2rem)] paper border border-ink bg-paper p-0 text-left font-normal text-ink normal-case tracking-normal shadow-[0_30px_60px_-20px_oklch(0.2_0.02_60/0.6)] backdrop:bg-[oklch(0.2_0.012_60/0.55)]"
       >
         <div className="p-6 sm:p-8">
           <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
-            <Kicker>From the archive</Kicker>
+            <Kicker>{kicker}</Kicker>
             <button
               type="button"
               onClick={() => ref.current?.close()}
@@ -44,7 +44,7 @@ export function IssuePopup({ project: p }: { project: Project }) {
               <img
                 src={p.logo}
                 alt={`${p.name} logo`}
-                className="max-h-full w-[70%] object-contain mix-blend-multiply contrast-[0.9] saturate-[0.45] sepia-[0.3]"
+                className="h-[62%] w-auto max-w-[70%] object-contain mix-blend-multiply contrast-[0.9] saturate-[0.45] sepia-[0.3]"
               />
             </div>
           )}
@@ -59,7 +59,7 @@ export function IssuePopup({ project: p }: { project: Project }) {
           {p.tags.length > 0 && <p className="mt-4 font-sans text-sm font-medium text-muted">Built with {p.tags.join(" · ")}</p>}
           {p.href && (
             <a href={p.href} target="_blank" rel="noopener noreferrer" className={`${buttonStyles.primary} mt-6`}>
-              Try the demo <ArrowUpRight />
+              {p.linkLabel ?? "Try the demo"} <ArrowUpRight />
             </a>
           )}
         </div>

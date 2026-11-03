@@ -16,7 +16,7 @@ const download = { href: site.resumePath, download: "Brandon_Zeller_Resume.pdf" 
 export default function ResumePage() {
   return (
     <div className="resume-print min-h-dvh">
-      <header className="sticky top-0 z-50 border-b border-ink bg-paper print:hidden">
+      <header className="paper sticky top-0 z-50 border-b border-ink bg-paper print:hidden">
         <Container className="flex h-14 items-center justify-between gap-4">
           <Link href="/" className="group inline-flex items-center gap-2 font-sans text-sm font-semibold">
             <ArrowRight className="size-4 rotate-180 transition-transform duration-500 ease-easy group-hover:-translate-x-0.5" />

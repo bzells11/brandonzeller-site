@@ -51,7 +51,7 @@ export function MobileMenu() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="fixed inset-x-0 top-12 bottom-0 z-40 overflow-y-auto bg-paper px-4 pt-6 pb-10"
+        className="paper fixed inset-x-0 top-12 bottom-0 z-40 overflow-y-auto bg-paper px-4 pt-6 pb-10"
       >
         <p className="font-display text-5xl italic">Contents</p>
         <ol className="mt-6 border-t-[3px] border-ink">

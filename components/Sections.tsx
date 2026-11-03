@@ -43,7 +43,7 @@ export function Feature() {
       page={c.page}
       label={c.label}
       read={readTime(...site.projects.flatMap((p) => [p.description, ...(p.story ?? [])]))}
-      className="bg-paper-2"
+      className="paper bg-paper-2"
     >
       {site.projects
         .filter((p) => p.size === "feature")
@@ -154,7 +154,7 @@ export function Masthead() {
       page={c.page}
       label={c.label}
       read={readTime(...site.involvement.map((i) => `${i.role} ${i.org} ${i.detail}`), ...site.honors.map((h) => `${h.name} ${h.issuer}`))}
-      className="bg-paper-2"
+      className="paper bg-paper-2"
     >
       <div className="mx-auto max-w-4xl text-center">
         <MaskTitle className="text-h1 italic">{c.title}.</MaskTitle>
@@ -326,7 +326,7 @@ function BackIssues() {
                 }`}
               >
                 {/* eslint-disable @next/next/no-img-element */}
-                {iss.icon && <img src={iss.icon} alt="" loading="lazy" className="w-[38%] mix-blend-multiply contrast-[0.9] saturate-[0.3] sepia-[0.35]" />}
+                {iss.icon && <img src={iss.icon} alt={iss.logo ? "" : `${iss.lead} logo`} loading="lazy" className={`${iss.logo ? "w-[38%]" : "w-[58%]"} mix-blend-multiply contrast-[0.9] saturate-[0.3] sepia-[0.35]`} />}
                 {iss.logo && (
                   <img src={iss.logo} alt={`${iss.lead} logo`} loading="lazy" className="w-[74%] mix-blend-multiply contrast-[0.9] saturate-[0.3] sepia-[0.35]" />
                 )}
@@ -345,7 +345,7 @@ function BackIssues() {
                       You&rsquo;re reading it
                     </a>
                 ) : archived(iss.archive) ? (
-                  <IssuePopup project={archived(iss.archive)!} />
+                  <IssuePopup project={archived(iss.archive)!} kicker={i > site.issues.findIndex((x) => x.current) ? "The next issue" : undefined} />
                 ) : iss.href ? (
                   <a href={iss.href} target="_blank" rel="noopener noreferrer" className="marker inline-flex items-center gap-0.5">
                     Try the demo <ArrowUpRight className="size-3" />

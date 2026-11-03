@@ -36,7 +36,7 @@ function CoverPage() {
   return (
     <div className="anim-cover mx-auto max-w-[31rem] [--tilt:0deg] lg:[--tilt:2.5deg]">
       <CoverTilt>
-        <div className="cover-tilt group/cover @container relative bg-paper shadow-[0_2px_0_var(--color-ink),0_30px_60px_-30px_oklch(0.2_0.02_60/0.55)] ring-1 ring-ink">
+        <div className="paper cover-tilt group/cover @container relative bg-paper shadow-[0_2px_0_var(--color-ink),0_30px_60px_-30px_oklch(0.2_0.02_60/0.55)] ring-1 ring-ink">
           {/* Masthead */}
           <div className="px-[4cqw] pt-[3cqw]">
             <div className="flex justify-between font-sans text-[2.8cqw] font-semibold uppercase tracking-[0.1em]">
