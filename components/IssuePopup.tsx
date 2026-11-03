@@ -5,7 +5,7 @@ import type { Project } from "@/content/site";
 import { ArrowUpRight, Kicker, buttonStyles } from "./ui";
 
 // "Learn more" on a back-issue cover: opens that project's write-up in a popup over the shelf.
-export function IssuePopup({ project: p, kicker = "From the archive" }: { project: Project; kicker?: string }) {
+export function IssuePopup({ project: p }: { project: Project }) {
   const ref = useRef<HTMLDialogElement>(null);
 
   return (
@@ -28,7 +28,7 @@ export function IssuePopup({ project: p, kicker = "From the archive" }: { projec
       >
         <div className="p-6 sm:p-8">
           <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
-            <Kicker>{kicker}</Kicker>
+            <Kicker>From the archive</Kicker>
             <button
               type="button"
               onClick={() => ref.current?.close()}

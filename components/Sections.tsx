@@ -42,7 +42,7 @@ export function Feature() {
       id={c.id}
       page={c.page}
       label={c.label}
-      read={readTime(...site.projects.flatMap((p) => [p.description, ...(p.story ?? [])]))}
+      read={readTime(...site.projects.filter((p) => p.size === "feature").flatMap((p) => [p.description, ...(p.story ?? [])]))}
       className="paper bg-paper-2"
     >
       {site.projects
@@ -112,6 +112,55 @@ function FeatureStory({ project: p }: { project: Project }) {
         </div>
       </InView>
     </article>
+  );
+}
+
+// Backstep: the second build, out now. Same layout as the feature, with an install-and-undo figure instead of a chart.
+export function Backstep() {
+  const c = contents.backstep;
+  const p = site.projects.find((x) => x.id === c.id)!;
+  return (
+    <Section id={c.id} page={c.page} label={c.label} read={readTime(p.description, ...(p.story ?? []))}>
+      <Kicker className="reveal">
+        Also building <span className="mx-2 text-muted">/</span>
+        <span className="rounded-[4px] bg-marker px-1.5 py-0.5">{p.status}</span>
+      </Kicker>
+      <MaskTitle className="mt-5 text-mega font-bold" delay={80}>{p.name}</MaskTitle>
+      <p className="reveal mt-6 max-w-3xl font-serif text-deck italic" style={delay(220)}>{p.description}</p>
+
+      <div className="reveal mt-12 grid gap-12 border-t border-ink pt-10 lg:grid-cols-12" style={delay(300)}>
+        <div className="lg:col-span-6">
+          {p.story?.map((para, i) => (
+            <p key={para} className={`text-body ${i === 0 ? "drop-cap" : "mt-5"}`}>
+              {para}
+            </p>
+          ))}
+          {p.href && (
+            <a href={p.href} target="_blank" rel="noopener noreferrer" className={`${buttonStyles.primary} mt-8`}>
+              {p.linkLabel ?? `See ${p.name}`} <ArrowUpRight />
+            </a>
+          )}
+        </div>
+
+        <figure className="self-start border border-ink bg-paper p-5 sm:p-6 lg:col-span-5 lg:col-start-8">
+          <div className="flex items-start justify-between gap-4">
+            <Kicker>Fig. 2 · Install it, then undo anything</Kicker>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {p.logo && <img src={p.logo} alt="" loading="lazy" className="h-8 w-auto shrink-0 mix-blend-multiply" />}
+          </div>
+          <pre className="mt-5 overflow-x-auto rounded-[5px] bg-ink px-4 py-3 font-mono text-sm text-paper">
+            <span className="select-none opacity-50">$ </span>npx backstep setup
+          </pre>
+          <p className="mt-5 flex flex-wrap items-center gap-2 font-sans text-sm font-medium">
+            <kbd className="rounded-[4px] border border-ink border-b-[3px] px-2 py-0.5 font-sans font-semibold">Ctrl</kbd>
+            <span aria-hidden="true">+</span>
+            <kbd className="rounded-[4px] border border-ink border-b-[3px] px-2 py-0.5 font-sans font-semibold">U</kbd>
+            <span>puts your files and data back how they were.</span>
+          </p>
+          <figcaption className="mt-5 border-t border-rule pt-3 text-base text-muted">Free plan. No card or account required.</figcaption>
+        </figure>
+      </div>
+    </Section>
   );
 }
 
@@ -288,13 +337,13 @@ function Vinyl() {
 const archived = (id: string) => site.projects.find((p) => p.id === id);
 
 // Covers you can click (a popup, or the current issue's story up top) tilt toward the cursor like the big cover.
-const clickable = (iss: (typeof site.issues)[number]) => iss.current || !!archived(iss.archive);
+const clickable = (iss: (typeof site.issues)[number]) => !!iss.story || !!archived(iss.archive);
 
 function CoverFrame({ clickable, children }: { clickable: boolean; children: React.ReactNode }) {
   return clickable ? <CoverTilt className="flex w-full">{children}</CoverTilt> : children;
 }
 
-// Mini covers for every issue. The current one is this site; future ones are placeholders.
+// Mini covers for every issue. Ones with a story on this page link to it; future ones are placeholders.
 function BackIssues() {
   return (
     <div className="mt-16 sm:mt-20">
@@ -340,12 +389,12 @@ function BackIssues() {
               </div>
               <p className="font-display text-xl leading-tight font-bold italic">{iss.lead}</p>
               <div className="mt-1 font-sans text-[0.625rem] font-semibold uppercase">
-                {iss.current ? (
-                  <a href={`#${contents.feature.id}`} className="rounded-[3px] bg-marker px-1 text-on-marker after:absolute after:inset-0">
-                      You&rsquo;re reading it
-                    </a>
+                {iss.story ? (
+                  <a href={`#${iss.story}`} className="after:absolute after:inset-0">
+                    <span className="marker">Read the story</span>
+                  </a>
                 ) : archived(iss.archive) ? (
-                  <IssuePopup project={archived(iss.archive)!} kicker={i > site.issues.findIndex((x) => x.current) ? "The next issue" : undefined} />
+                  <IssuePopup project={archived(iss.archive)!} />
                 ) : iss.href ? (
                   <a href={iss.href} target="_blank" rel="noopener noreferrer" className="marker inline-flex items-center gap-0.5">
                     Try the demo <ArrowUpRight className="size-3" />

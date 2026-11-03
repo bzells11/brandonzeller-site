@@ -4,7 +4,7 @@ import { contents } from "./contents";
 import { MobileMenu } from "./MobileMenu";
 import { Container } from "./ui";
 
-const links = [contents.feature, contents.work, contents.masthead, contents.contact];
+const links = [contents.feature, contents.backstep, contents.work, contents.masthead, contents.contact];
 
 export function Nav() {
   return (

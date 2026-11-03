@@ -178,6 +178,7 @@ function ContentsPage() {
   const entries = [
     contents.intro,
     contents.feature,
+    contents.backstep,
     contents.work,
     contents.masthead,
     contents.back,

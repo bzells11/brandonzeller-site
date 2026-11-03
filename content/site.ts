@@ -65,11 +65,13 @@ export const site = {
 
   // "Every issue" shelf on the back page: past, current, and upcoming. Each issue is one project, and its cover shows that
   // project's icon and wordmark (put the files in /public/issues; either one is optional). When you ship your next big project,
-  // add it here as a new issue (and move "current" to it). "archive" is the id of the project whose write-up opens from its "Learn more" popup.
+  // add it here as a new issue. "story" is the id of the section on this page that tells its story ("Read the story");
+  // "archive" is the id of the project whose write-up opens from its "Learn more" popup instead.
   issues: [
-    { number: "00", season: "Spring 2026", headline: "The pilot issue", lead: "REW AI", current: false, icon: "", logo: "/issues/rewai.webp", href: "https://rewai-demo.vercel.app", archive: "rew-ai" },
-    { number: "01", season: "Fall 2026", headline: "The founder issue", lead: "WaitLess", current: true, icon: "/issues/waitless-icon.webp", logo: "/issues/waitless-wordmark.webp", href: "", archive: "" },
-    { number: "02", season: "Nov 2026", headline: "The undo issue", lead: "Backstep", current: false, icon: "/issues/backstep.webp", logo: "", href: "https://getbackstep.com", archive: "backstep" },
+    { number: "00", season: "Spring 2026", headline: "The pilot issue", lead: "REW AI", story: "", icon: "", logo: "/issues/rewai.webp", href: "https://rewai-demo.vercel.app", archive: "rew-ai" },
+    { number: "01", season: "Fall 2026", headline: "The founder issue", lead: "WaitLess", story: "waitless", icon: "/issues/waitless-icon.webp", logo: "/issues/waitless-wordmark.webp", href: "", archive: "" },
+    { number: "02", season: "Nov 2026", headline: "The undo issue", lead: "Backstep", story: "backstep", icon: "/issues/backstep.webp", logo: "", href: "https://getbackstep.com", archive: "" },
+    { number: "03", season: "Coming soon", headline: "The next issue", lead: "Next project", story: "", icon: "", logo: "", href: "", archive: "" },
   ],
 
   about: [
@@ -117,9 +119,12 @@ export const site = {
     {
       id: "backstep",
       name: "Backstep",
-      description:
-        "Undo for everything your AI touches. Backstep saves a copy of your files and data before an AI coding tool like Claude Code or Cursor changes them. If something goes wrong, press Ctrl+U and everything goes back to how it was, including project files and database tables in Supabase, Firebase, or Postgres.",
+      description: "Undo for everything your AI touches.",
       tags: [],
+      story: [
+        "Backstep saves a copy of your files and data before an AI coding tool like Claude Code, Cursor, or Claude Desktop makes a change. If something goes wrong, press Ctrl+U and everything goes back to how it was.",
+        "It covers project files, commands, and database data and tables in Supabase, Firebase, or Postgres. It's out now, with a free plan that doesn't need a card or an account.",
+      ],
       status: "Live",
       note: "No. 02 · The undo issue · Out now and still building",
       href: "https://getbackstep.com",

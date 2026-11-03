@@ -1,7 +1,7 @@
 import { Cover } from "@/components/Cover";
 import { Nav } from "@/components/Nav";
 import { ReloadToTop } from "@/components/ReloadToTop";
-import { BackCover, BackPage, Feature, Intro, Masthead, Work } from "@/components/Sections";
+import { BackCover, BackPage, Backstep, Feature, Intro, Masthead, Work } from "@/components/Sections";
 
 export default function Home() {
   return (
@@ -17,6 +17,7 @@ export default function Home() {
       <main id="main">
         <Intro />
         <Feature />
+        <Backstep />
         <Work />
         <Masthead />
         <BackPage />
