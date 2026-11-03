@@ -102,7 +102,7 @@ function CoverPage() {
               </span>
             </a>
 
-            <Sticker ring="Backstep · Just launched" big="Out" small="Now" />
+            <Sticker ring="Backstep · Just launched" big="New" small="Live" />
 
             <div className="absolute right-[4cqw] bottom-[4cqw] flex w-[27cqw] flex-col items-center bg-paper px-[2cqw] pt-[2cqw] pb-[1cqw]">
               <Barcode
