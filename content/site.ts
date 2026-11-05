@@ -43,7 +43,7 @@ export const site = {
   resumePath: "/Brandon_Zeller_Resume.pdf",
   headshot: {
     src: "/headshot.jpg",
-    alt: "Brandon Zeller in a grey suit against a blue studio backdrop",
+    alt: "Brandon Zeller in a grey suit outside a brick campus building at Ohio State's Fisher College of Business",
     width: 944,
     height: 1104,
   },
