@@ -51,35 +51,36 @@ export function MobileMenu() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="paper fixed inset-x-0 top-12 bottom-0 z-40 overflow-y-auto bg-paper px-4 pt-6 pb-10"
+        className={`paper fixed inset-x-0 top-12 bottom-0 z-40 flex-col overflow-y-auto bg-paper px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] ${open ? "flex" : ""}`}
       >
-        <p className="font-display text-5xl italic">Contents</p>
-        <ol className="mt-6 border-t-[3px] border-ink">
+        <p className="font-display text-[length:clamp(1.5rem,5dvh,2.5rem)] leading-none italic">Contents</p>
+        {/* Rows share whatever height is left, so the whole list and the buttons fit without scrolling. */}
+        <ol className="mt-3 flex flex-1 flex-col border-t-[3px] border-ink">
           {entries.map((e, i) => (
-            <li key={e.id} className="anim-rise border-b border-rule" style={{ animationDelay: `${i * 50}ms` }}>
+            <li key={e.id} className="anim-rise flex max-h-24 flex-1 border-b border-rule" style={{ animationDelay: `${i * 50}ms` }}>
               <a
                 href={`#${e.id}`}
                 onClick={() => setOpen(false)}
-                className="grid grid-cols-[3.25rem_1fr] items-baseline gap-2 py-4"
+                className="grid flex-1 grid-cols-[3.25rem_1fr] content-center items-baseline gap-2 py-1"
               >
-                <span className="font-display text-3xl font-bold tabular-nums">{e.page}</span>
+                <span className="font-display text-[length:clamp(1.25rem,3.6dvh,1.875rem)] leading-none font-bold tabular-nums">{e.page}</span>
                 <span>
                   <span className="block font-sans text-kicker font-semibold uppercase text-muted">{e.label}</span>
-                  <span className="mt-0.5 block font-serif text-2xl italic">{e.title}</span>
+                  <span className="block font-serif text-[length:clamp(1rem,3dvh,1.5rem)] leading-tight italic">{e.title}</span>
                 </span>
               </a>
             </li>
           ))}
         </ol>
-        <div className="mt-8 grid grid-cols-2 gap-3 font-sans text-sm font-semibold">
-          <a href={`mailto:${site.email}`} className="flex h-12 items-center justify-center rounded-md border border-ink">
+        <div className="mt-3 grid shrink-0 grid-cols-2 gap-3 font-sans text-sm font-semibold">
+          <a href={`mailto:${site.email}`} className="flex h-11 items-center justify-center rounded-md border border-ink">
             Email
           </a>
           <a
             href={site.links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-12 items-center justify-center rounded-md border border-ink"
+            className="flex h-11 items-center justify-center rounded-md border border-ink"
           >
             LinkedIn
           </a>
