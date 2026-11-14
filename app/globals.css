@@ -119,10 +119,11 @@
 [data-dock] {
   position: relative;
   transform-origin: 0 0;
-  will-change: transform;
 }
+/* Only while the dock is running (desktop), so phones don't hold three extra layers for nothing. */
 [data-dock][data-docked] {
   z-index: 40;
+  will-change: transform;
 }
 [data-dock][data-dock-hidden] {
   visibility: hidden;
@@ -149,22 +150,24 @@
   text-align: left;
   cursor: pointer;
   transform-origin: 0 0;
-  filter: drop-shadow(0 18px 18px oklch(0.2 0.02 60 / 0.3));
-  transition: filter 0.25s ease;
 }
 .issue-dock[data-show] .issue-dock-cover {
   pointer-events: auto;
 }
 /* Hovering darkens the shadow a touch; nothing moves. */
-.issue-dock-cover:hover {
-  filter: drop-shadow(0 22px 22px oklch(0.2 0.02 60 / 0.45));
+.issue-dock-cover:hover > * {
+  box-shadow: 0 22px 22px oklch(0.2 0.02 60 / 0.45);
 }
 .issue-dock-cover:focus-visible {
   outline: 6px solid var(--color-ink);
   outline-offset: 8px;
 }
+/* The shadow is drawn once on the floating cover and moves with it. (A filter on the button would
+   be worked out again on every frame of the float.) */
 .issue-dock-cover > * {
   pointer-events: none;
+  box-shadow: 0 18px 18px oklch(0.2 0.02 60 / 0.3);
+  transition: box-shadow 0.25s ease;
 }
 /* They barely float: a few pixels up and down with a hint of tilt, slow, and each on its own rhythm so
    they never move together. The copies are pinned to the screen, so this is the only thing moving them.
@@ -180,6 +183,10 @@
   .issue-dock-cover:nth-child(3) > * {
     animation-duration: 5.8s;
     animation-delay: -4.1s;
+  }
+  /* No floating while the dock is out of sight (top of the page, or covers back on the shelf). */
+  .issue-dock:not([data-show]) .issue-dock-cover > * {
+    animation-play-state: paused;
   }
 }
 @keyframes dock-float {
@@ -457,13 +464,25 @@ body {
   }
 }
 
-/* Cover: resting tilt plus a small 3D lean toward the cursor (see CoverTilt). */
+/* Cover: resting tilt plus a small 3D lean toward the cursor (see CoverTilt).
+   The lean angles don't pass down to what's inside the cover, so moving the mouse restyles one element. */
+@property --rx {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --ry {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .cover-3d {
   perspective: 1400px;
 }
 
 .cover-tilt {
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(var(--tilt, 0deg));
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) rotate(var(--tilt, 0deg));
   transition: transform 0.6s var(--ease-out-expo);
 }
 

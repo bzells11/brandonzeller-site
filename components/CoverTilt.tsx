@@ -9,7 +9,10 @@ export function CoverTilt({ children, className = "" }: { children: ReactNode; c
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    // The lean is set on the tilting element itself (not this wrapper), so a mouse move restyles one
+    // element instead of everything on the cover.
+    const tilt = el?.querySelector<HTMLElement>(".cover-tilt");
+    if (!el || !tilt) return;
     if (!matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) return;
 
     let frame = 0;
@@ -19,14 +22,14 @@ export function CoverTilt({ children, className = "" }: { children: ReactNode; c
         const r = el.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - 0.5;
         const y = (e.clientY - r.top) / r.height - 0.5;
-        el.style.setProperty("--ry", `${(x * 8).toFixed(2)}deg`);
-        el.style.setProperty("--rx", `${(-y * 6).toFixed(2)}deg`);
+        tilt.style.setProperty("--ry", `${(x * 8).toFixed(2)}deg`);
+        tilt.style.setProperty("--rx", `${(-y * 6).toFixed(2)}deg`);
       });
     };
     const onLeave = () => {
       cancelAnimationFrame(frame);
-      el.style.setProperty("--ry", "0deg");
-      el.style.setProperty("--rx", "0deg");
+      tilt.style.setProperty("--ry", "0deg");
+      tilt.style.setProperty("--rx", "0deg");
     };
 
     el.addEventListener("pointermove", onMove);

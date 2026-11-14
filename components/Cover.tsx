@@ -129,24 +129,26 @@ function Sticker({ ring: text, big, small }: { ring: string; big: string; small:
       aria-hidden="true"
       className="anim-slap absolute top-[4cqw] right-[4cqw] size-[27cqw] rotate-12 transition-[scale,rotate] duration-700 ease-easy group-hover/cover:scale-110 group-hover/cover:rotate-[20deg]"
     >
+      {/* The ring is its own svg, stacked on the disc. Spinning a whole svg runs on the GPU; spinning a
+          group inside one redraws the text on every frame. */}
+      <svg viewBox="0 0 100 100" className="anim-spin absolute inset-0 size-full">
+        <path
+          id="sticker-ring"
+          d="M50 50 m-37 0 a37 37 0 1 1 74 0 a37 37 0 1 1 -74 0"
+          fill="none"
+        />
+        <text
+          className="font-sans"
+          fontSize="8.4"
+          fontWeight="700"
+          letterSpacing="1.6"
+          fill="var(--color-on-marker)"
+        >
+          <textPath href="#sticker-ring">{ring}</textPath>
+        </text>
+      </svg>
       <svg viewBox="0 0 100 100" className="size-full">
         <circle cx="50" cy="50" r="49" fill="var(--color-marker)" />
-        <g className="anim-spin origin-center">
-          <path
-            id="sticker-ring"
-            d="M50 50 m-37 0 a37 37 0 1 1 74 0 a37 37 0 1 1 -74 0"
-            fill="none"
-          />
-          <text
-            className="font-sans"
-            fontSize="8.4"
-            fontWeight="700"
-            letterSpacing="1.6"
-            fill="var(--color-on-marker)"
-          >
-            <textPath href="#sticker-ring">{ring}</textPath>
-          </text>
-        </g>
         <text
           x="50"
           y="49"

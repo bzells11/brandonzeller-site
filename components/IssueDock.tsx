@@ -48,8 +48,10 @@ export function IssueDock() {
     let vh = 0;
     let frame = 0;
     let active = false;
+    let last = -1; // flight progress on the previous frame
 
     const measure = () => {
+      last = -1;
       covers.forEach((c) => (c.style.transform = ""));
       const vw = document.documentElement.clientWidth;
       vh = innerHeight;
@@ -81,6 +83,10 @@ export function IssueDock() {
       const docked = e === 0;
 
       layer.toggleAttribute("data-show", docked && y >= WAKE);
+      // Still docked (the real covers are hidden) or still on the shelf: nothing to move, so most
+      // scrolling touches nothing here. The flight works out its position fresh on every frame.
+      if (e === last && (e === 0 || e === 1)) return;
+      last = e;
       covers.forEach((c, i) => {
         const s = slots[i];
         const k = 1 - e;
