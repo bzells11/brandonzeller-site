@@ -17,7 +17,6 @@
   /* Red highlight for things that are live right now. */
   --color-live: oklch(0.52 0.19 25);
   --color-on-live: oklch(0.97 0.01 85);
-  --color-cover: oklch(0.52 0.12 245);
 
   /* Type */
   --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
@@ -241,7 +240,6 @@ body {
   --color-muted: oklch(0.42 0.018 65);
   --color-rule: oklch(0.7 0.035 78);
   --color-marker: oklch(0.8 0.05 86);
-  --color-cover: oklch(0.5 0.01 60);
 }
 
 :root[data-edition="print"] body {

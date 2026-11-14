@@ -42,7 +42,6 @@ export const site = {
   },
   resumePath: "/Brandon_Zeller_Resume.pdf",
   headshot: {
-    src: "/headshot.jpg",
     alt: "Brandon Zeller in a grey suit in a brick colonnade at Fisher Hall, Ohio State's Fisher College of Business",
     width: 944,
     height: 1104,
@@ -57,7 +56,6 @@ export const site = {
   hero: {
     tagline: "Founder. Builder. Fisher '30.",
     location: "Columbus, OH",
-    subline: "Business student at Ohio State building real products with AI.",
   },
 
   // The site is laid out like a magazine issue. Bump these whenever you like.
